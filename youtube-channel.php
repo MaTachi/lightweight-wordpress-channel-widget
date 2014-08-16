@@ -61,7 +61,6 @@ class WPAU_YOUTUBE_CHANNEL extends WP_Widget {
 			'channel'       => YTCUID,
 			'playlist'      => YTCPLID,
 			'use_res'       => false,
-			'only_pl'       => false,
 			'cache_time'    => 300, // 5 minutes
 			'maxrnd'        => 25,
 			'vidqty'        => 1,
@@ -70,13 +69,6 @@ class WPAU_YOUTUBE_CHANNEL extends WP_Widget {
 			'getrnd'        => false,
 			'ratio'         => 3, // 3 - 16:9, 2 - 16:10, 1 - 4:3
 			'width'         => 220,
-			'to_show'       => 'thumbnail', // thumbnail, iframe, iframe2, chromeless, object
-			'themelight'    => false,
-			'controls'      => false,
-			'fixyt'         => false,
-			'autoplay'      => false,
-			'autoplay_mute' => false,
-			'norel'         => false,
 			
 			'showtitle'     => false,
 			'showvidesc'    => false,
@@ -133,7 +125,6 @@ class WPAU_YOUTUBE_CHANNEL extends WP_Widget {
 					$v['cache_time']    = 0;
 					$v['userchan']      = 0;
 					$v['enhprivacy']    = 0;
-					$v['autoplay_mute'] = 0;
 
 					// add old YTC widget to new set
 					// but append at the end if YTC widget with same ID already exist
@@ -251,7 +242,6 @@ class WPAU_YOUTUBE_CHANNEL extends WP_Widget {
 		$playlist      = (!empty($instance['playlist'])) ? esc_attr($instance['playlist']) : '';
 
 		$use_res       = (!empty($instance['use_res'])) ? esc_attr($instance['use_res']) : 0; // resource to use: channel, favorites, playlis : ''t
-		$only_pl       = (!empty($instance['only_pl'])) ? esc_attr($instance['only_pl']) : '';
 
 		$cache_time    = (!empty($instance['cache_time'])) ? esc_attr($instance['cache_time']) : '';
 
@@ -266,14 +256,6 @@ class WPAU_YOUTUBE_CHANNEL extends WP_Widget {
 		$ratio         = (!empty($instance['ratio'])) ? esc_attr($instance['ratio']) : 3;
 		$width         = (!empty($instance['width'])) ? esc_attr($instance['width']) : 220;
 		// $height        = (!empty($instance['height'])) ? esc_attr($instance['height']) : '';
-
-		$to_show       = (!empty($instance['to_show'])) ? esc_attr($instance['to_show']) : '';
-		$themelight    = (!empty($instance['themelight'])) ? esc_attr($instance['themelight']) : '';
-		$controls      = (!empty($instance['controls'])) ? esc_attr($instance['controls']) : '';
-		$fixyt         = (!empty($instance['fixyt'])) ? esc_attr($instance['fixyt']) : '';
-		$autoplay      = (!empty($instance['autoplay'])) ? esc_attr($instance['autoplay']) : '';
-		$autoplay_mute = (!empty($instance['autoplay_mute'])) ? esc_attr($instance['autoplay_mute']) : '';
-		$norel         = (!empty($instance['norel'])) ? esc_attr($instance['norel']) : '';
 
 		// Content Layout
 		$showtitle     = (!empty($instance['showtitle'])) ? esc_attr($instance['showtitle']) : '';
@@ -308,27 +290,8 @@ class WPAU_YOUTUBE_CHANNEL extends WP_Widget {
 			<select class="widefat" id="<?php echo $this->get_field_id( 'use_res' ); ?>" name="<?php echo $this->get_field_name( 'use_res' ); ?>">
 				<option value="0"<?php selected( $use_res, 0 ); ?>><?php _e('Channel', YTCTDOM); ?></option>
 				<option value="1"<?php selected( $use_res, 1 ); ?>><?php _e('Favorites', YTCTDOM); ?></option>
-				<option value="2"<?php selected( $use_res, 2 ); ?>><?php _e('Playlist', YTCTDOM); ?></option>
 			</select>
-			<br />
-			<label style="display: none" for="<?php echo $this->get_field_id( 'only_pl' ); ?>" id="<?php echo $this->get_field_id( 'only_pl' ); ?>_label"><input class="checkbox" type="checkbox" <?php checked( (bool) $only_pl, true );	?> id="<?php echo $this->get_field_id( 'only_pl' );	?>" name="<?php echo $this->get_field_name( 'only_pl' );	?>" title="<?php _e('Enable this option to embed YouTube playlist widget instead single video from playlist', YTCTDOM); ?>" /> <?php _e('Embed standard playlist', YTCTDOM); ?></label>
 		</p>
-<?php $onlypl_js_fn = str_replace('-','_',$this->get_field_id( 'only_pl' )); ?>
-<script type="text/javascript">
-	jQuery(document).ready(function($){
-		toggle_<?php echo $onlypl_js_fn; ?>($('#<?php echo $this->get_field_id( 'use_res' ); ?>'));
-		$('#<?php echo $this->get_field_id( 'use_res' ); ?>').change(function(){
-			toggle_<?php echo $onlypl_js_fn; ?>($(this));
-		});
-		function toggle_<?php echo $onlypl_js_fn; ?>(d) {
-			if ( d.find(':selected')[0].value == 2 ) {
-				$('#<?php echo $this->get_field_id( 'only_pl' ); ?>_label').fadeIn();
-			} else {
-				$('#<?php echo $this->get_field_id( 'only_pl' ); ?>_label').fadeOut();
-			}
-		}
-	});
-</script>
 		<p>
 			<label for="<?php echo $this->get_field_id('cache_time');	?>"><?php _e('Cache feed:', YTCTDOM); ?></label>
 			<select class="widefat" id="<?php echo $this->get_field_id( 'cache_time' ); ?>" name="<?php echo $this->get_field_name( 'cache_time' ); ?>">
@@ -360,22 +323,6 @@ class WPAU_YOUTUBE_CHANNEL extends WP_Widget {
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id('width'); ?>"><?php _e('Width', YTCTDOM); ?>:</label> <input class="small-text" id="<?php echo $this->get_field_id('width'); ?>" name="<?php echo $this->get_field_name('width'); ?>" type="number" min="32" value="<?php echo $width; ?>" title="<?php _e('Set video width in pixels', YTCTDOM); ?>" /> px (<?php _e('default', YTCTDOM); ?> 220)
-		</p>
-		<p>
-			<label for="<?php echo $this->get_field_id('to_show'); ?>"><?php _e('What to show?', YTCTDOM); ?></label>
-			<select class="widefat" id="<?php echo $this->get_field_id( 'to_show' ); ?>" name="<?php echo $this->get_field_name( 'to_show' ); ?>">
-				<option value="thumbnail"<?php selected( $to_show, 'thumbnail' ); ?>><?php _e('Thumbnail', YTCTDOM); ?></option>
-				<option value="object"<?php selected( $to_show, 'object' ); ?>><?php _e('Flash (object)', YTCTDOM); ?></option>
-				<option value="iframe"<?php selected( $to_show, 'iframe' ); ?>><?php _e('HTML5 (iframe)', YTCTDOM); ?></option>
-				<option value="iframe2"<?php selected( $to_show, 'iframe2' ); ?>><?php _e('HTML5 (iframe) Async', YTCTDOM); ?></option>
-				<option value="chromeless"<?php selected( $to_show, 'chromeless' ); ?>><?php _e('Chromeless', YTCTDOM); ?></option>
-			</select>
-			<input class="checkbox" type="checkbox" <?php checked( (bool) $themelight, true ); ?> id="<?php echo $this->get_field_id( 'themelight' ); ?>" name="<?php echo $this->get_field_name( 'themelight' ); ?>" /> <label for="<?php echo $this->get_field_id( 'themelight' ); ?>"><?php _e('Use light theme (default is dark)', YTCTDOM); ?></label><br />
-			<input class="checkbox" type="checkbox" <?php checked( (bool) $controls, true ); ?> id="<?php echo $this->get_field_id( 'controls' ); ?>" name="<?php echo $this->get_field_name( 'controls' ); ?>" /> <label for="<?php echo $this->get_field_id( 'controls' ); ?>"><?php _e('Hide player controls', YTCTDOM); ?></label><br />
-			<input class="checkbox" type="checkbox" <?php checked( (bool) $fixyt, true ); ?> id="<?php echo $this->get_field_id( 'fixyt' ); ?>" name="<?php echo $this->get_field_name( 'fixyt' ); ?>" /> <label for="<?php echo $this->get_field_id( 'fixyt' ); ?>"><?php _e('Fix height taken by controls', YTCTDOM); ?></label><br />
-			<input class="checkbox" type="checkbox" <?php checked( (bool) $autoplay, true ); ?> id="<?php echo $this->get_field_id( 'autoplay' ); ?>" name="<?php echo $this->get_field_name( 'autoplay' ); ?>" /> <label for="<?php echo $this->get_field_id( 'autoplay' ); ?>"><?php _e('Autoplay video or playlist', YTCTDOM); ?></label><br />
-			<input class="checkbox" type="checkbox" <?php checked( (bool) $autoplay_mute, true ); ?> id="<?php echo $this->get_field_id( 'autoplay_mute' ); ?>" name="<?php echo $this->get_field_name( 'autoplay_mute' ); ?>" /> <label for="<?php echo $this->get_field_id( 'autoplay_mute' ); ?>"><?php _e('Mute video on autoplay', YTCTDOM); ?></label><br />
-			<input class="checkbox" type="checkbox" <?php checked( (bool) $norel, true ); ?> id="<?php echo $this->get_field_id( 'norel' ); ?>" name="<?php echo $this->get_field_name( 'norel' ); ?>" /> <label for="<?php echo $this->get_field_id( 'norel' ); ?>"><?php _e('Hide related videos', YTCTDOM); ?></label>
 		</p>
 
 		<h4><?php _e('Content Layout', YTCTDOM); ?></h4>
@@ -440,7 +387,6 @@ if ( $debugon == 'on' ) {
 		$instance['playlist']      = strip_tags($new_instance['playlist']);
 		$instance['use_res']       = $new_instance['use_res'];
 		$instance['cache_time']    = $new_instance['cache_time'];
-		$instance['only_pl']       = (isset($new_instance['only_pl'])) ? $new_instance['only_pl'] : false;
 		$instance['getrnd']        = (isset($new_instance['getrnd'])) ? $new_instance['getrnd'] : false;
 		$instance['maxrnd']        = $new_instance['maxrnd'];
 		
@@ -455,17 +401,11 @@ if ( $debugon == 'on' ) {
 		$instance['width']         = strip_tags($new_instance['width']);
 		// $instance['height']        = strip_tags($new_instance['height']);
 		$instance['to_show']       = strip_tags($new_instance['to_show']);
-		$instance['autoplay']      = (isset($new_instance['autoplay'])) ? $new_instance['autoplay'] : false;
-		$instance['autoplay_mute'] = (isset($new_instance['autoplay_mute'])) ? $new_instance['autoplay_mute'] : false;
-		$instance['norel']         = (isset($new_instance['norel'])) ? $new_instance['norel'] : false;
 
-		$instance['controls']      = (isset($new_instance['controls'])) ? $new_instance['controls'] : false;
 		$instance['fixnoitem']     = (isset($new_instance['fixnoitem'])) ? $new_instance['fixnoitem'] : false;
 		$instance['ratio']         = strip_tags($new_instance['ratio']);
-		$instance['fixyt']         = (isset($new_instance['fixyt'])) ? $new_instance['fixyt'] : '';
 		$instance['hideinfo']      = (isset($new_instance['hideinfo'])) ? $new_instance['hideinfo'] : '';
 		$instance['hideanno']      = (isset($new_instance['hideanno'])) ? $new_instance['hideanno'] : '';
-		$instance['themelight']    = (isset($new_instance['themelight'])) ? $new_instance['themelight'] : '';
 		$instance['debugon']       = (isset($new_instance['debugon'])) ? $new_instance['debugon'] : '';
 		$instance['userchan']      = (isset($new_instance['userchan'])) ? $new_instance['userchan'] : '';
 		$instance['enhprivacy']    = (isset($new_instance['enhprivacy'])) ? $new_instance['enhprivacy'] : '';
@@ -482,7 +422,6 @@ if ( $debugon == 'on' ) {
 		$instance['channel']       = (empty($channel)) ? $defaults['channel'] : $channel;
 		$instance['playlist']      = (empty($playlist)) ? $defaults['playlist'] : $playlist;
 		$instance['use_res']       = (empty($res)) ? $defaults['use_res'] : $res; // resource: 0 channel, 1 favorites, 2 playlist
-		$instance['only_pl']       = (empty($only_pl)) ? $defaults['only_pl'] : true; // use embedded playlist - false by default
 		$instance['cache_time']    = (empty($cache)) ? $defaults['cache_time'] : $cache; // in seconds, def 5min - settings?
 
 		$instance['maxrnd']        = (empty($fetch)) ? $defaults['maxrnd'] : $fetch;
@@ -496,13 +435,6 @@ if ( $debugon == 'on' ) {
 		$instance['width']         = (empty($width)) ? $defaults['width'] : $width; // 220
 		$instance['to_show']       = (empty($show)) ? $defaults['to_show'] : $show; // thumbnail, iframe, iframe2, object, chromeless
 		
-		$instance['themelight']    = (empty($themelight)) ? $defaults['themelight'] : $themelight; // use light theme, dark by default
-		$instance['controls']      = (empty($controls)) ? $defaults['controls'] : $controls; // hide controls, false by default
-		$instance['fixyt']         = (empty($fix_h)) ? $defaults['fixyt'] : $fix_h; // fix youtube height, disabled by default
-		$instance['autoplay']      = (empty($autoplay)) ? $defaults['autoplay'] : $autoplay; // autoplay disabled by default
-		$instance['autoplay_mute'] = (empty($mute)) ? $defaults['autoplay_mute'] : $mute; // mute sound on autoplay - disabled by default
-		$instance['norel']         = (empty($norel)) ? $defaults['norel'] : $norel; // hide related videos
-
 		// Content Layout
 		$instance['showtitle']     = (empty($showtitle)) ? $defaults['showtitle'] : $showtitle; // show video title, disabled by default
 		$instance['showvidesc']    = (empty($showdesc)) ? $defaults['showvidesc'] : $showdesc; // show video description, disabled by default
@@ -540,122 +472,121 @@ if ( $debugon == 'on' ) {
 
 		$output[] = '<div class="youtube_channel">';
 
-		if ( $instance['only_pl'] && $use_res == 2 ) { // print standard playlist
-			$output = array_merge($output, ytc_only_pl($instance));
-		} else { // channel or playlist single videos
-		
-			// get max items for random video
-			$maxrnd = $instance['maxrnd'];
-			if ( $maxrnd < 1 ) { $maxrnd = 10; } // default 10
-			elseif ( $maxrnd > 50 ) { $maxrnd = 50; } // max 50
+		// channel or playlist single videos
 
-			$feed_attr = '?alt=json';
-			// select fields
-			$feed_attr .= "&fields=entry(published,title,link,content)";
+		// get max items for random video
+		$maxrnd = $instance['maxrnd'];
+		if ( $maxrnd < 1 ) { $maxrnd = 10; } // default 10
+		elseif ( $maxrnd > 50 ) { $maxrnd = 50; } // max 50
 
-			if ( !$instance['fixnoitem'] && $use_res != 1 )
-				$feed_attr .= '&orderby=published';
-				
-			$getrnd = $instance['getrnd'];
-			if ( $getrnd ) $feed_attr .= '&max-results='.$maxrnd;
+		$feed_attr = '?alt=json';
+		// select fields
+		$feed_attr .= "&fields=entry(published,title,link,content)";
 
-			$feed_attr .= '&rel=0';
-			switch ($use_res) {
-				case 1: // favorites
-					$feed_url = 'http://gdata.youtube.com/feeds/base/users/'.$channel.'/favorites'.$feed_attr;
-					break;
-				case 2: // playlist
-					$playlist = ytc_clean_playlist_id($playlist);
-					$feed_url = 'http://gdata.youtube.com/feeds/api/playlists/'.$playlist.$feed_attr;
-					break;
-				default:
-					$feed_url = 'http://gdata.youtube.com/feeds/base/users/'.$channel.'/uploads'.$feed_attr;
-			}
+		if ( !$instance['fixnoitem'] && $use_res != 1 )
+			$feed_attr .= '&orderby=published';
+			
+		$getrnd = $instance['getrnd'];
+		if ( $getrnd ) $feed_attr .= '&max-results='.$maxrnd;
 
-			// do we need cache?
-			if ($instance['cache_time'] > 0 ) {
-				// generate feed cache key for caching time
-				$cache_key = 'ytc_'.md5($feed_url).'_'.$instance['cache_time'];
+		$feed_attr .= '&rel=0';
+		switch ($use_res) {
+			case 1: // favorites
+				$feed_url = 'http://gdata.youtube.com/feeds/base/users/'.$channel.'/favorites'.$feed_attr;
+				break;
+			case 2: // playlist
+				$playlist = ytc_clean_playlist_id($playlist);
+				$feed_url = 'http://gdata.youtube.com/feeds/api/playlists/'.$playlist.$feed_attr;
+				break;
+			default:
+				$feed_url = 'http://gdata.youtube.com/feeds/base/users/'.$channel.'/uploads'.$feed_attr;
+		}
 
-				if (!empty($_GET['ytc_force_recache']))
-					delete_transient($cache_key);
+		// do we need cache?
+		if ($instance['cache_time'] > 0 ) {
+			// generate feed cache key for caching time
+			$cache_key = 'ytc_'.md5($feed_url).'_'.$instance['cache_time'];
 
-				// get/set transient cache
-				if ( false === ($json = get_transient($cache_key)) ) {
-					// no cached JSON, get new
-					$wprga = array(
-						'timeout' => 2 // two seconds only
-					);
-					$response = wp_remote_get($feed_url, $wprga);
-					$json = wp_remote_retrieve_body( $response );
+			if (!empty($_GET['ytc_force_recache']))
+				delete_transient($cache_key);
 
-					// $json = file_get_contents($feed_url,0,null,null);
-					// set decoded JSON to transient cache_key
-					set_transient($cache_key, base64_encode($json), $instance['cache_time']);
-				} else {
-					// we already have cached feed JSON, get it encoded
-					$json = base64_decode($json);
-				}
-			} else {
-				// just get fresh feed if cache disabled
-				// $json = file_get_contents($feed_url,0,null,null);
+			// get/set transient cache
+			if ( false === ($json = get_transient($cache_key)) ) {
+				// no cached JSON, get new
 				$wprga = array(
 					'timeout' => 2 // two seconds only
 				);
 				$response = wp_remote_get($feed_url, $wprga);
 				$json = wp_remote_retrieve_body( $response );
-			}
 
-			// decode JSON data
-			$json_output = json_decode($json);
-
-			// predefine maxitems to prevent undefined notices
-			$maxitems = 0;
-			if ( !is_wp_error($json_output) && is_object($json_output) ) {
-				// sort by date uploaded
-				$json_entry = $json_output->feed->entry;
-
-				/* AU:20140216 for what we need this at all, when feed already have orderby=published */
-				// do we need sort when use playlist?
-				// if ( $use_res != 2 ) usort($json_entry, "ytc_json_sort_by_date"); 
-				
-				$vidqty = $instance['vidqty'];
-				if ( $vidqty > $maxrnd ) { $maxrnd = $vidqty; }
-				$maxitems = ( $maxrnd > sizeof($json_entry) ) ? sizeof($json_entry) : $maxrnd;
-
-				if ( $getrnd ) {
-					$items =  array_slice($json_entry,0,$maxitems);
-				} else {
-					if ( !$vidqty ) $vidqty = 1;
-					$items =  array_slice($json_entry,0,$vidqty);
-				}
-			}
-
-			if ($maxitems == 0) {
-				// $output[] = __( 'No items' , YTCTDOM );
-				$output[] = __("No items", YTCTDOM).' [<a href="'.$feed_url.'" target="_blank">'.__("Check here why",YTCTDOM).'</a>]';
+				// $json = file_get_contents($feed_url,0,null,null);
+				// set decoded JSON to transient cache_key
+				set_transient($cache_key, base64_encode($json), $instance['cache_time']);
 			} else {
-
-				if ( $getrnd ) $rnd_used = array(); // set array for unique random item
-
-				for ($y = 1; $y <= $vidqty; $y++) {
-					if ( $getrnd ) {
-						$rnd_item = mt_rand(0, (count($items)-1));
-						while ( $y > 1 && in_array($rnd_item, $rnd_used) ) {
-							$rnd_item = mt_rand(0, (count($items)-1));
-						}
-						$rnd_used[] = $rnd_item;
-						$item = $items[$rnd_item];
-					} else {
-						$item = $items[$y-1];
-					}
-					
-					// print single video block
-					$output = array_merge( $output, ytc_print_video($item, $instance, $y) );
-				}
-
+				// we already have cached feed JSON, get it encoded
+				$json = base64_decode($json);
 			}
-		} // single playlist or ytc way
+		} else {
+			// just get fresh feed if cache disabled
+			// $json = file_get_contents($feed_url,0,null,null);
+			$wprga = array(
+				'timeout' => 2 // two seconds only
+			);
+			$response = wp_remote_get($feed_url, $wprga);
+			$json = wp_remote_retrieve_body( $response );
+		}
+
+		// decode JSON data
+		$json_output = json_decode($json);
+
+		// predefine maxitems to prevent undefined notices
+		$maxitems = 0;
+		if ( !is_wp_error($json_output) && is_object($json_output) ) {
+			// sort by date uploaded
+			$json_entry = $json_output->feed->entry;
+
+			/* AU:20140216 for what we need this at all, when feed already have orderby=published */
+			// do we need sort when use playlist?
+			// if ( $use_res != 2 ) usort($json_entry, "ytc_json_sort_by_date"); 
+			
+			$vidqty = $instance['vidqty'];
+			if ( $vidqty > $maxrnd ) { $maxrnd = $vidqty; }
+			$maxitems = ( $maxrnd > sizeof($json_entry) ) ? sizeof($json_entry) : $maxrnd;
+
+			if ( $getrnd ) {
+				$items =  array_slice($json_entry,0,$maxitems);
+			} else {
+				if ( !$vidqty ) $vidqty = 1;
+				$items =  array_slice($json_entry,0,$vidqty);
+			}
+		}
+
+		if ($maxitems == 0) {
+			// $output[] = __( 'No items' , YTCTDOM );
+			$output[] = __("No items", YTCTDOM).' [<a href="'.$feed_url.'" target="_blank">'.__("Check here why",YTCTDOM).'</a>]';
+		} else {
+
+			if ( $getrnd ) $rnd_used = array(); // set array for unique random item
+
+			for ($y = 1; $y <= $vidqty; $y++) {
+				if ( $getrnd ) {
+					$rnd_item = mt_rand(0, (count($items)-1));
+					while ( $y > 1 && in_array($rnd_item, $rnd_used) ) {
+						$rnd_item = mt_rand(0, (count($items)-1));
+					}
+					$rnd_used[] = $rnd_item;
+					$item = $items[$rnd_item];
+				} else {
+					$item = $items[$y-1];
+				}
+				
+				// print single video block
+				$output = array_merge( $output, ytc_print_video($item, $instance, $y) );
+			}
+
+		}
+
+		// single playlist or ytc way
 
 		$output = array_merge( $output, ytc_channel_link($instance) ); // insert link to channel on bootom of widget
 
@@ -697,56 +628,6 @@ if( class_exists('WPAU_YOUTUBE_CHANNEL'))
 		wp_enqueue_style( 'youtube-channel', plugins_url('assets/css/youtube-channel.css', __FILE__), array(), YTCVER );
 	}
 	add_action( 'wp_enqueue_scripts', 'ytc_enqueue_scripts' );
-
-	function ytc_footer_js() {
-		// Print JS only if we have set YTC array
-		if ( !empty($_SESSION['ytc_html5_js']) )
-		{
-	?>
-	<!-- YouTube Channel v<?php echo YTCVER; ?> -->
-	<script type="text/javascript">
-	var tag = document.createElement('script');
-	tag.src = "https://www.youtube.com/iframe_api";
-	var firstScriptTag = document.getElementsByTagName('script')[0];
-	firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-	function onYouTubeIframeAPIReady() {
-	<?php echo $_SESSION['ytc_html5_js']; ?>
-	}
-	function ytc_mute(event){
-		event.target.mute();
-	}
-	</script>
-	<?php
-		}
-	}
-	add_action( 'wp_footer', 'ytc_footer_js' );
-}
-
-/* function to print standard playlist embed code */
-function ytc_only_pl($instance) {
-		$width = $instance['width'];
-		if ( empty($width) )
-			$width = 220;
-
-		$playlist = (empty($instance['playlist'])) ? YTCPLID : $instance['playlist'];
-
-		$height = height_ratio($width, $instance['ratio']);
-		// $height = height_ratio($width, $instance['height'], $instance['ratio']);
-
-		$height += ($instance['fixyt']) ? 25 : 0;
-
-		$playlist = ytc_clean_playlist_id($playlist);
-
-		$autoplay = (empty($instance['autoplay'])) ? '' : '&autoplay=1';
-		
-		$rel = (empty($instance['norel'])) ? '' : '&rel=0';
-
-		// enhanced privacy
-		$yt_domain = yt_domain($instance);
-		$output[] = '<div class="ytc_video_container ytc_video_1 ytc_video_single">
-<iframe src="http://'.$yt_domain.'/embed/videoseries?list=PL'.$playlist.$autoplay.$rel.'" 
-width="'.$width.'" height="'.$height.'" frameborder="0"></iframe></div>';
-		return $output;
 }
 
 /* function to print video in widget */
@@ -755,10 +636,6 @@ function ytc_print_video($item, $instance, $y) {
 	// get hideinfo, autoplay and controls settings
 	// where this is used?
 	$hideinfo      = $instance['hideinfo'];
-	$autoplay      = $instance['autoplay'];
-	$autoplay_mute = $instance['autoplay_mute'];
-	$controls      = $instance['controls'];
-	$norel         = $instance['norel'];
 
 	// set width and height
 	$width  = ( empty($instance['width']) ) ? 220 : $instance['width'];
@@ -767,15 +644,7 @@ function ytc_print_video($item, $instance, $y) {
 	// calculate image height based on width for 4:3 thumbnail
 	$imgfixedheight = $width / 4 * 3;
 
-	// which type to show
-	$to_show = (empty($instance['to_show'])) ? 'object' : $instance['to_show'];
-
-	// if not thumbnail, increase video height for 25px taken by video controls
-	if ( $to_show != 'thumbnail' && !$controls && $instance['fixyt'] )
-		$height += 25;
-
 	$hideanno   = $instance['hideanno'];
-	$themelight = $instance['themelight'];
 	/* end of video settings */
 
 	$yt_id     = $item->link[0]->href;
@@ -795,12 +664,10 @@ function ytc_print_video($item, $instance, $y) {
 			$vnumclass = 'first';
 			break;
 		case $instance['vidqty']:
-			$autoplay = false;
 			$vnumclass = 'last';
 			break;
 		default:
 			$vnumclass = 'mid';
-			$autoplay = false;
 			break;
 	}
 
@@ -817,102 +684,15 @@ function ytc_print_video($item, $instance, $y) {
 	$yt_domain = yt_domain($instance);
 
 	// print out video
-	if ( $to_show == "thumbnail" ) {
-		// set proper class for responsive thumbs per selected aspect ratio
-		switch ($instance['ratio'])
-		{
-			case 1: $arclass = 'ar4_3'; break;
-			case 2: $arclass = 'ar16_10'; break;
-			default: $arclass = 'ar16_9';
-		}
-		$title = sprintf( __( 'Watch video %1$s published on %2$s' , YTCTDOM ), $yt_title, $yt_date );
-		$rel = ( $norel ) ? "0" : "1";
-		$output[] = '<a href="'.$yt_video.'&rel='.$rel.'" title="'.$yt_title.'" class="ytc_thumb ytc-lightbox '.$arclass.'"><span style="background-image: url('.$yt_thumb.');" title="'.$title.'" id="'.$ytc_vid.'"></span></a>';
-	} else if ( $to_show == "chromeless" ) {
-		ob_start();
-?>
-	<object type="application/x-shockwave-flash" data="<?php echo YOUTUBE_CHANNEL_URL . 'chromeless.swf'; ?>" width="<?php echo $width; ?>" height="<?php echo $height; ?>" id="<?php echo $ytc_vid; ?>">
-		<param name="flashVars" value="video_source=<?php echo $yt_id; ?>&video_width=<?php echo $width; ?>&video_height=<?php echo $height; ?><?php if ( $autoplay ) echo "&autoplay=Yes"; if ( !$controls ) echo "&youtube_controls=Yes"; if ( $hideanno ) echo "&iv_load_policy=3"; if ( $themelight ) echo "&theme=light"; if ( $norel ) echo "&rel=0"; ?>" />
-		<param name="quality" value="high" />
-		<param name="wmode" value="opaque" />
-		<param name="swfversion" value="6.0.65.0" />
-		<param name="movie" value="<?php echo YOUTUBE_CHANNEL_URL . 'chromeless.swf'; ?>" />
-	</object>	
-<?php
-		$output[] = ob_get_contents();
-		ob_end_clean();
-	} else if ( $to_show == "iframe" ) {
-		if ( empty($usepl) ) $yt_url = $yt_id;
-
-		$output[] = '<iframe title="YouTube video player" width="'.$width.'" height="'.$height.'" src="//'.$yt_domain.'/embed/'.$yt_url.'?wmode=opaque'; //&enablejsapi=1';
-		if ( $controls ) $output[] = "&amp;controls=0";
-		if ( $hideinfo ) $output[] = "&amp;showinfo=0";
-		if ( $autoplay ) $output[] = "&amp;autoplay=1";
-		if ( $hideanno ) $output[] = "&amp;iv_load_policy=3";
-		if ( $themelight ) $output[] = "&amp;theme=light";
-		// disable related videos
-		if ( $norel ) $output[] = "&amp;rel=0";
-
-		$output[] = '" style="border: 0;" allowfullscreen id="'.$ytc_vid.'"></iframe>';
-	} else if ( $to_show == "iframe2" ) {
-		// youtube API async
-		if ( empty($usepl) ) $yt_url = $yt_id;
-
-		$js_rel            = ( $norel ) ? "rel: 0," : '';
-		$js_controls       = ( $controls ) ? "controls: 0," : '';
-		$js_showinfo       = ( $hideinfo ) ? "showinfo: 0," : '';
-		$js_iv_load_policy = ( $hideanno ) ? "iv_load_policy: 3," : '';
-		$js_theme          = ( $themelight ) ? "theme: 'light'," : '';
-		$js_autoplay       = ( $autoplay ) ? "autoplay: 1," : '';
-		$js_autoplay_mute  = ( $autoplay && $autoplay_mute ) ? "events: {'onReady': ytc_mute}" : '';
-		$js_player_id      = str_replace('-', '_', $yt_url);
-
-		$output[] = '<div id="ytc_player_'.$js_player_id.'"></div>';
-		$site_domain = $_SERVER['HTTP_HOST'];
-		$ytc_html5_js = <<<JS
-			var ytc_player_$js_player_id;
-			ytc_player_$js_player_id = new YT.Player('ytc_player_$js_player_id', {
-				height: '$height',
-				width: '$width',
-				videoId: '$yt_url',
-				enablejsapi: 1,
-				playerVars: {
-					$js_autoplay $js_showinfo $js_controls $js_theme $js_rel wmmode: 'opaque'
-				},
-				origin: '$site_domain',
-				$js_iv_load_policy $js_autoplay_mute
-			});
-JS;
-
-	// prepare JS for footer
-	if ( empty($_SESSION['ytc_html5_js']) )
-		$_SESSION['ytc_html5_js'] = $ytc_html5_js;
-	else
-		$_SESSION['ytc_html5_js'] .= $ytc_html5_js;
-
-	} else { // default is object
-		$obj_url = '//'.$yt_domain.'/'.$yt_url.'?version=3';
-		$obj_url .= ( $controls ) ? '&amp;controls=0' : '';
-		$obj_url .= ( $hideinfo ) ? '&amp;showinfo=0' : '';
-		$obj_url .= ( $autoplay ) ? '&amp;autoplay=1' : '';
-		$obj_url .= ( $hideanno ) ? '&amp;iv_load_policy=3' : '';
-		$obj_url .= ( $themelight ) ? '&amp;theme=light' : '';
-		$obj_url .= ( $norel ) ? '&amp;rel=0' : '';
-		ob_start();
-?>
-<object width="<?php echo $width; ?>" height="<?php echo $height; ?>"  type="application/x-shockwave-flash" data="<?php echo $obj_url; ?>">
-	<param name="movie" value="<?php echo $obj_url; ?>" />
-	<param name="allowFullScreen" value="true" />
-	<param name="allowscriptaccess" value="always" />
-	<param name="quality" value="high" />
-	<param name="wmode" value="opaque" />
-	<embed src="<?php echo $obj_url; ?>" type="application/x-shockwave-flash" width="<?php echo $width; ?>" height="<?php echo $height; ?>" allowscriptaccess="always" allowfullscreen="true" />
-</object>
-
-<?php
-		$output[] = ob_get_contents();
-		ob_end_clean();
+	// set proper class for responsive thumbs per selected aspect ratio
+	switch ($instance['ratio'])
+	{
+		case 1: $arclass = 'ar4_3'; break;
+		case 2: $arclass = 'ar16_10'; break;
+		default: $arclass = 'ar16_9';
 	}
+	$title = sprintf( __( 'Watch video %1$s published on %2$s' , YTCTDOM ), $yt_title, $yt_date );
+	$output[] = '<a href="'.$yt_video.'" title="'.$yt_title.'" class="ytc_thumb ytc-lightbox '.$arclass.'"><span style="background-image: url('.$yt_thumb.');" title="'.$title.'" id="'.$ytc_vid.'"></span></a>';
 
 	// do we need to show video description?
 	if ( $instance['showvidesc'] ) {
