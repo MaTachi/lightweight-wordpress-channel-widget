@@ -1,0 +1,194 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Youtube Channel 1.3.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-09-28 21:16+0200\n"
+"PO-Revision-Date: 2012-03-02 11:45+0100\n"
+"Last-Translator: Ladislav Drábek <ladislav.drabek@zholesova.cz>\n"
+"Language-Team: zholesova.cz <Ladislav Drábek <ladislav.drabek@zholesova.cz>>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Czech\n"
+"X-Poedit-Country: CZECH REPUBLIC\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: ../youtube-channel.php:56
+msgid "Aspect ratio (relative to width):"
+msgstr "Poměr stran (relativně k šířce):"
+
+#: ../youtube-channel.php:72
+msgid "Autoplay video"
+msgstr "Automaticky přehrát video"
+
+#: ../youtube-channel.php:49
+msgid "Channel:"
+msgstr "Kanál:"
+
+#: ../youtube-channel.php:71
+msgid "Fix height taken by controls"
+msgstr "Oprava výšky zabrané ovládáním"
+
+#: ../youtube-channel.php:53
+msgid "Get random video from channel"
+msgstr "Získej náhodné video z kanálu"
+
+#: ../youtube-channel.php:55
+msgid "Height"
+msgstr "Výška"
+
+#: ../youtube-channel.php:73
+msgid "Hide player controls"
+msgstr "Skryj ovládání přehrávače"
+
+#: ../youtube-channel.php:74
+msgid "Hide video info"
+msgstr "Skryj info o videu"
+
+#: ../youtube-channel.php:52
+msgid "Items to fetch (min 1, max 50):"
+msgstr "Videí k načtení (min 1, max 50):"
+
+#: ../youtube-channel.php:187
+msgid "No items"
+msgstr "Žádné video"
+
+#: ../youtube-channel.php:79
+msgid "Open channel in new window/tab"
+msgstr "Otevírej kanál v novém okně / záložce"
+
+#: ../youtube-channel.php:50
+msgid "Playlist:"
+msgstr "Playlist:"
+
+#: ../youtube-channel.php:78
+msgid "Show link to channel"
+msgstr "Ukaž odkaz na kanál"
+
+#: ../youtube-channel.php:75
+msgid "Show video title"
+msgstr "Ukaž název videa"
+
+#: ../youtube-channel.php:80
+msgid "Use target=\"_blank\" (invalid XHTML)"
+msgstr "Použij target=\"_blank\" (nevalidní XHTML) - slouží pro otevírání v novém okně"
+
+#: ../youtube-channel.php:51
+msgid "Use the playlist instead of channel"
+msgstr "Použij playlist místo kanálu"
+
+#: ../youtube-channel.php:77
+msgid "Visit YouTube Channel text:"
+msgstr "Text pro odkaz na kanál:"
+
+#: ../youtube-channel.php:256
+#, php-format
+msgid "Visit channel %1$s"
+msgstr "Navštiv kanál %1$s"
+
+#: ../youtube-channel.php:219
+#, php-format
+msgid "Watch video %1$s published on %2$s"
+msgstr "Podívej se na video %1$s z %2$s"
+
+#: ../youtube-channel.php:64
+msgid "What to show?"
+msgstr "Jak zobrazit?"
+
+#: ../youtube-channel.php:48
+msgid "Widget Title:"
+msgstr "Název Widgetu"
+
+#: ../youtube-channel.php:54
+msgid "Width"
+msgstr "Šířka"
+
+#: ../youtube-channel.php:23
+msgid "YouTube Channel"
+msgstr "YouTube Channel"
+
+#: ../youtube-channel.php:69
+msgid "chromeless video"
+msgstr "\"chromeless\" video"
+
+#: ../youtube-channel.php:58
+msgid "custom"
+msgstr "vlastní"
+
+#: ../youtube-channel.php:54
+#: ../youtube-channel.php:55
+msgid "default"
+msgstr "standard"
+
+#: ../youtube-channel.php:68
+msgid "iframe (HTML5 player)"
+msgstr "iframe (HTML5 přehrávač)"
+
+#: ../youtube-channel.php:259
+msgid "in new window/tab"
+msgstr "v novém okně / záložce"
+
+#: ../youtube-channel.php:67
+msgid "object (flash player)"
+msgstr "objekt (flash player)"
+
+#: ../youtube-channel.php:66
+msgid "thumbnail"
+msgstr "náhled"
+
+#@ youtube-channel
+#: youtube-channel.php:59
+msgid "Try to fix `No items` error"
+msgstr "Pokus se opravit problém s „Žádné video“"
+
+#@ youtube-channel
+#: youtube-channel.php:78
+msgid "Use light theme (default is dark)"
+msgstr "Použij světlé téma (stabdard je tmavé)"
+
+#@ youtube-channel
+#: youtube-channel.php:84
+msgid "Show video description"
+msgstr "Ukaž popisek videa"
+
+#@ youtube-channel
+#: youtube-channel.php:85
+msgid "Hide annotations from video"
+msgstr "Skryj poznámky z videa"
+
+#@ youtube-channel
+#: youtube-channel.php:88
+msgid "Description length"
+msgstr "Délka popisu videa"
+
+#@ youtube-channel
+#: youtube-channel.php:57
+msgid "Get one random video of latest N videos from channel (min 1, max 50):"
+msgstr "Vyber náhodně jedno video z posledních N videí kanálu (min 1, max. 50):"
+
+#@ youtube-channel
+#: youtube-channel.php:58
+msgid "Show random video from channel"
+msgstr "Ukaž náhodné video z kanálu"
+
+#@ youtube-channel
+#: youtube-channel.php:60
+msgid "Video property"
+msgstr "Nastavení videa"
+
+#@ youtube-channel
+#: youtube-channel.php:82
+msgid "Layout behaviour"
+msgstr "Rozvržení"
+
+#@ youtube-channel
+#: youtube-channel.php:89
+msgid "Link to channel"
+msgstr "Odkaz na kanál"
+
