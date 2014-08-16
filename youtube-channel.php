@@ -64,7 +64,6 @@ class WPAU_YOUTUBE_CHANNEL extends WP_Widget {
 			'cache_time'    => 300, // 5 minutes
 			'maxrnd'        => 25,
 			'vidqty'        => 1,
-			'enhprivacy'    => false,
 			'fixnoitem'     => false,
 			'getrnd'        => false,
 			'ratio'         => 3, // 3 - 16:9, 2 - 16:10, 1 - 4:3
@@ -124,7 +123,6 @@ class WPAU_YOUTUBE_CHANNEL extends WP_Widget {
 
 					$v['cache_time']    = 0;
 					$v['userchan']      = 0;
-					$v['enhprivacy']    = 0;
 
 					// add old YTC widget to new set
 					// but append at the end if YTC widget with same ID already exist
@@ -248,7 +246,6 @@ class WPAU_YOUTUBE_CHANNEL extends WP_Widget {
 		$maxrnd        = (!empty($instance['maxrnd'])) ? esc_attr($instance['maxrnd']) : 25; // items to fetch
 		$vidqty        = (!empty($instance['vidqty'])) ? esc_attr($instance['vidqty']) : 1; // number of items to show
 
-		$enhprivacy    = (!empty($instance['enhprivacy'])) ? esc_attr($instance['enhprivacy']) : '';
 		$fixnoitem     = (!empty($instance['fixnoitem'])) ? esc_attr($instance['fixnoitem']) : '';
 		$getrnd        = (!empty($instance['getrnd'])) ? esc_attr($instance['getrnd']) : '';
 
@@ -305,8 +302,6 @@ class WPAU_YOUTUBE_CHANNEL extends WP_Widget {
 			<label for="<?php echo $this->get_field_id('vidqty'); ?>"><?php _e('Show:', YTCTDOM); ?></label> <input class="small-text" id="<?php echo $this->get_field_id('vidqty'); ?>" name="<?php echo $this->get_field_name('vidqty'); ?>" type="number" min="1" value="<?php echo ( $vidqty ) ? $vidqty : '1'; ?>" title="<?php _e('Number of videos to display', YTCTDOM); ?>" /> video(s)
 		</p>
 		<p>
-			<input class="checkbox" type="checkbox" <?php checked( (bool) $enhprivacy, true ); ?> id="<?php echo $this->get_field_id( 'enhprivacy' ); ?>" name="<?php echo $this->get_field_name( 'enhprivacy' ); ?>" title="<?php _e('Enable this option to protect your visitors privacy', YTCTDOM); ?>" /> <label for="<?php echo $this->get_field_id( 'enhprivacy' ); ?>"><?php printf(__('Use <a href="%s" target="_blank">Enhanced Privacy</a>', YTCTDOM), 'http://support.google.com/youtube/bin/answer.py?hl=en-GB&answer=171780'); ?></label>
-			<br />
 			<input class="checkbox" type="checkbox" <?php checked( (bool) $fixnoitem, true ); ?> id="<?php echo $this->get_field_id( 'fixnoitem' ); ?>" name="<?php echo $this->get_field_name( 'fixnoitem' ); ?>" title="<?php _e('Enable this option if you get error No Item', YTCTDOM); ?>" /> <label for="<?php echo $this->get_field_id( 'fixnoitem' ); ?>"><?php _e('Fix <em>No items</em> error/Respect playlist order', YTCTDOM); ?></label>
 			<br />
 			<input class="checkbox" type="checkbox" <?php checked( (bool) $getrnd, true ); ?> id="<?php echo $this->get_field_id( 'getrnd' ); ?>" name="<?php echo $this->get_field_name( 'getrnd' ); ?>" title="<?php _e('Get random videos of all fetched from channel or playlist', YTCTDOM); ?>" /> <label for="<?php echo $this->get_field_id( 'getrnd' ); ?>"><?php _e('Show random video', YTCTDOM); ?></label>
@@ -408,7 +403,6 @@ if ( $debugon == 'on' ) {
 		$instance['hideanno']      = (isset($new_instance['hideanno'])) ? $new_instance['hideanno'] : '';
 		$instance['debugon']       = (isset($new_instance['debugon'])) ? $new_instance['debugon'] : '';
 		$instance['userchan']      = (isset($new_instance['userchan'])) ? $new_instance['userchan'] : '';
-		$instance['enhprivacy']    = (isset($new_instance['enhprivacy'])) ? $new_instance['enhprivacy'] : '';
 
 		return $instance;
 	}
@@ -680,9 +674,6 @@ function ytc_print_video($item, $instance, $y) {
 	// define object ID
 	$ytc_vid = 'ytc_' . $yt_id;
 
-	// enhanced privacy
-	$yt_domain = yt_domain($instance);
-
 	// print out video
 	// set proper class for responsive thumbs per selected aspect ratio
 	switch ($instance['ratio'])
@@ -816,8 +807,4 @@ function ytc_json_sort_by_date($a, $b) {
 	$ap = $a->published;
 	$bp = $b->published;
 	return strnatcmp($bp, $ap);
-}
-function yt_domain($instance) {
-	$yt_domain = ( !empty($instance['enhprivacy']) ) ? 'www.youtube-nocookie.com' : 'www.youtube.com';
-	return $yt_domain;
 }
