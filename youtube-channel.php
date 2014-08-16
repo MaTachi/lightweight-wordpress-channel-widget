@@ -695,11 +695,6 @@ if( class_exists('WPAU_YOUTUBE_CHANNEL'))
 	/* Load YTC player script */
 	function ytc_enqueue_scripts() {
 		wp_enqueue_style( 'youtube-channel', plugins_url('assets/css/youtube-channel.css', __FILE__), array(), YTCVER );
-
-		// enqueue magnific-popup
-		wp_enqueue_script( 'magnific-popup', plugins_url('assets/lib/magnific-popup/jquery.magnific-popup.min.js', __FILE__), array('jquery'), YTCVER, true );
-		wp_enqueue_style( 'magnific-popup', plugins_url('assets/lib/magnific-popup/magnific-popup.css', __FILE__), array(), YTCVER );
-		wp_enqueue_script( 'youtube-channel', plugins_url('assets/js/youtube-channel.js', __FILE__), array(), YTCVER, true );
 	}
 	add_action( 'wp_enqueue_scripts', 'ytc_enqueue_scripts' );
 
