@@ -1,139 +1,639 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
-msgid   ""
-msgstr  "Project-Id-Version: PACKAGE VERSION\n"
-        "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2011-09-28 21:16+0200\n"
-        "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-        "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-        "Language-Team: LANGUAGE <LL@li.org>\n"
-        "Language: \n"
-        "MIME-Version: 1.0\n"
-        "Content-Type: text/plain; charset=CHARSET\n"
-        "Content-Transfer-Encoding: 8bit\n"
+msgid ""
+msgstr ""
+"Project-Id-Version: YouTube Channel\n"
+"POT-Creation-Date: 2014-09-26 23:02+0100\n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.9\n"
+"X-Poedit-Basepath: x:\\devel\\wamp\\www\\wp40\\wp-content\\plugins\\youtube-"
+"channel\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: .\n"
 
-#: ../youtube-channel.php:56
-msgid   "Aspect ratio (relative to width):"
-msgstr  ""
+#: inc/config.20140926.php:58 inc/config.php:54
+msgid "General"
+msgstr ""
 
-#: ../youtube-channel.php:72
-msgid   "Autoplay video"
-msgstr  ""
+#: inc/config.20140926.php:64 inc/config.php:60
+msgid "YouTube Channel ID"
+msgstr ""
 
-#: ../youtube-channel.php:49
-msgid   "Channel:"
-msgstr  ""
+#: inc/config.20140926.php:65 inc/config.php:61
+msgid "Enter your YouTube channel ID (channel name, not full URL to channel)"
+msgstr ""
 
-#: ../youtube-channel.php:71
-msgid   "Fix height taken by controls"
-msgstr  ""
+#: inc/config.20140926.php:71 inc/config.php:67
+msgid "Default Playlist ID"
+msgstr ""
 
-#: ../youtube-channel.php:53
-msgid   "Get random video from channel"
-msgstr  ""
+#: inc/config.20140926.php:72 inc/config.php:68
+msgid "Enter default playlist ID (not playlist name)"
+msgstr ""
 
-#: ../youtube-channel.php:55
-msgid   "Height"
-msgstr  ""
+#: inc/config.20140926.php:78 inc/config.php:74 inc/widget.php:97
+msgid "Resource to use"
+msgstr ""
 
-#: ../youtube-channel.php:73
-msgid   "Hide player controls"
-msgstr  ""
+#: inc/config.20140926.php:79 inc/config.php:75
+msgid "What to use as resource for feeds"
+msgstr ""
 
-#: ../youtube-channel.php:74
-msgid   "Hide video info"
-msgstr  ""
+#: inc/config.20140926.php:81 inc/config.php:77 inc/widget.php:99
+msgid "Channel"
+msgstr ""
 
-#: ../youtube-channel.php:52
-msgid   "Items to fetch (min 1, max 50):"
-msgstr  ""
+#: inc/config.20140926.php:82 inc/config.php:78 inc/widget.php:100
+msgid "Favorites"
+msgstr ""
 
-#: ../youtube-channel.php:187
-msgid   "No items"
-msgstr  ""
+#: inc/config.20140926.php:83 inc/config.php:79 inc/widget.php:101
+msgid "Playlist"
+msgstr ""
 
-#: ../youtube-channel.php:79
-msgid   "Open channel in new window/tab"
-msgstr  ""
+#: inc/config.20140926.php:90 inc/config.php:86 inc/widget.php:104
+msgid "Embed standard playlist"
+msgstr ""
 
-#: ../youtube-channel.php:50
-msgid   "Playlist:"
-msgstr  ""
+#: inc/config.20140926.php:91 inc/config.php:87
+msgid ""
+"Enable this option to embed whole playlist instead single video from "
+"playlist when you chose playlist as resource"
+msgstr ""
 
-#: ../youtube-channel.php:78
-msgid   "Show link to channel"
-msgstr  ""
+#: inc/config.20140926.php:97 inc/config.php:93
+msgid "Cache Timeout"
+msgstr ""
 
-#: ../youtube-channel.php:75
-msgid   "Show video title"
-msgstr  ""
+#: inc/config.20140926.php:98 inc/config.php:94
+msgid "Define caching timeout for YouTube feeds, in seconds"
+msgstr ""
 
-#: ../youtube-channel.php:80
-msgid   "Use target=\"_blank\" (invalid XHTML)"
-msgstr  ""
+#: inc/config.20140926.php:101 inc/config.php:97 inc/widget.php:125
+msgid "Do not chache"
+msgstr ""
 
-#: ../youtube-channel.php:51
-msgid   "Use the playlist instead of channel"
-msgstr  ""
+#: inc/config.20140926.php:102 inc/config.php:98 youtube-channel.php:809
+msgid "1 minute"
+msgstr ""
 
-#: ../youtube-channel.php:77
-msgid   "Visit YouTube Channel text:"
-msgstr  ""
+#: inc/config.20140926.php:103 inc/config.php:99 youtube-channel.php:810
+msgid "5 minutes"
+msgstr ""
 
-#: ../youtube-channel.php:256
+#: inc/config.20140926.php:104 inc/config.php:100 youtube-channel.php:811
+msgid "15 minutes"
+msgstr ""
+
+#: inc/config.20140926.php:105 inc/config.php:101 youtube-channel.php:812
+msgid "30 minutes"
+msgstr ""
+
+#: inc/config.20140926.php:106 inc/config.php:102 youtube-channel.php:815
+msgid "1 hour"
+msgstr ""
+
+#: inc/config.20140926.php:107 inc/config.php:103 youtube-channel.php:816
+msgid "2 hours"
+msgstr ""
+
+#: inc/config.20140926.php:108 inc/config.php:104 youtube-channel.php:817
+msgid "5 hours"
+msgstr ""
+
+#: inc/config.20140926.php:109 inc/config.php:105 youtube-channel.php:818
+msgid "10 hours"
+msgstr ""
+
+#: inc/config.20140926.php:110 inc/config.php:106 youtube-channel.php:819
+msgid "12 hours"
+msgstr ""
+
+#: inc/config.20140926.php:111 inc/config.php:107 youtube-channel.php:820
+msgid "18 hours"
+msgstr ""
+
+#: inc/config.20140926.php:112 inc/config.php:108 youtube-channel.php:823
+msgid "1 day"
+msgstr ""
+
+#: inc/config.20140926.php:113 inc/config.php:109 youtube-channel.php:824
+msgid "2 days"
+msgstr ""
+
+#: inc/config.20140926.php:114 inc/config.php:110 youtube-channel.php:825
+msgid "3 days"
+msgstr ""
+
+#: inc/config.20140926.php:115 inc/config.php:111 youtube-channel.php:826
+msgid "4 days"
+msgstr ""
+
+#: inc/config.20140926.php:116 inc/config.php:112 youtube-channel.php:827
+msgid "5 days"
+msgstr ""
+
+#: inc/config.20140926.php:117 inc/config.php:113 youtube-channel.php:828
+msgid "6 days"
+msgstr ""
+
+#: inc/config.20140926.php:118 inc/config.php:114 youtube-channel.php:831
+msgid "1 week"
+msgstr ""
+
+#: inc/config.20140926.php:119 inc/config.php:115 youtube-channel.php:832
+msgid "2 weeks"
+msgstr ""
+
+#: inc/config.20140926.php:120 inc/config.php:116 youtube-channel.php:833
+msgid "3 weeks"
+msgstr ""
+
+#: inc/config.20140926.php:121 inc/config.php:117 youtube-channel.php:834
+msgid "1 month"
+msgstr ""
+
+#: inc/config.20140926.php:128 inc/config.php:124 inc/widget.php:130
+msgid "Fetch"
+msgstr ""
+
+#: inc/config.20140926.php:129 inc/config.php:125 inc/widget.php:130
+msgid ""
+"Number of videos that will be used for random pick (min 2, max 50, default "
+"25)"
+msgstr ""
+
+#: inc/config.20140926.php:138 inc/config.php:134 inc/widget.php:132
+msgid "Show"
+msgstr ""
+
+#: inc/config.20140926.php:139 inc/config.php:135 inc/widget.php:132
+msgid "Number of videos to display"
+msgstr ""
+
+#: inc/config.20140926.php:148 inc/config.php:144
+msgid "Use Enhanced privacy"
+msgstr ""
+
+#: inc/config.20140926.php:155 inc/config.php:151 inc/widget.php:137
+msgid "Fix <em>No items</em> error/Respect playlist order"
+msgstr ""
+
+#: inc/config.20140926.php:156 inc/config.php:152 inc/widget.php:137
+msgid "Enable this option if you get error No Item"
+msgstr ""
+
+#: inc/config.20140926.php:162 inc/config.php:158 inc/widget.php:139
+msgid "Show random video"
+msgstr ""
+
+#: inc/config.20140926.php:163 inc/config.php:159 inc/widget.php:139
+msgid "Get random videos of all fetched from channel or playlist"
+msgstr ""
+
+#: inc/config.20140926.php:172 inc/config.php:168
+msgid "Video"
+msgstr ""
+
+#: inc/config.20140926.php:178 inc/config.php:174
+msgid "Aspect Ratio"
+msgstr ""
+
+#: inc/config.20140926.php:179 inc/config.php:175
+msgid "Select aspect ratio for displayed video"
+msgstr ""
+
+#: inc/config.20140926.php:182 inc/config.php:178
+msgid "16:9"
+msgstr ""
+
+#: inc/config.20140926.php:183 inc/config.php:179
+msgid "16:10"
+msgstr ""
+
+#: inc/config.20140926.php:184 inc/config.php:180
+msgid "4:3"
+msgstr ""
+
+#: inc/config.20140926.php:191 inc/config.php:187
+msgid "Video Width"
+msgstr ""
+
+#: inc/config.20140926.php:192 inc/config.php:188
+msgid "Set default width for displayed video, in pixels"
+msgstr ""
+
+#: inc/config.20140926.php:201 inc/config.php:197 inc/widget.php:154
+msgid "What to show?"
+msgstr ""
+
+#: inc/config.20140926.php:202 inc/config.20140926.php:336 inc/config.php:198
+#: inc/config.php:332
+msgid "Set what will be shown by default"
+msgstr ""
+
+#: inc/config.20140926.php:205 inc/config.php:201 inc/widget.php:156
+msgid "Thumbnail"
+msgstr ""
+
+#: inc/config.20140926.php:206 inc/config.php:202 inc/widget.php:157
+msgid "Flash (object)"
+msgstr ""
+
+#: inc/config.20140926.php:207 inc/config.php:203 inc/widget.php:158
+msgid "HTML5 (iframe)"
+msgstr ""
+
+#: inc/config.20140926.php:208 inc/config.php:204 inc/widget.php:159
+msgid "HTML5 (iframe) Async"
+msgstr ""
+
+#: inc/config.20140926.php:209 inc/config.php:205 inc/widget.php:160
+msgid "Chromeless"
+msgstr ""
+
+#: inc/config.20140926.php:216 inc/config.php:212
+msgid "Use light theme"
+msgstr ""
+
+#: inc/config.20140926.php:217 inc/config.php:213
+msgid ""
+"Enable this option to use light theme for playback controls instead dark"
+msgstr ""
+
+#: inc/config.20140926.php:223 inc/config.php:219 inc/widget.php:163
+msgid "Hide player controls"
+msgstr ""
+
+#: inc/config.20140926.php:224 inc/config.php:220
+msgid "Enable this option to hide playback controls"
+msgstr ""
+
+#: inc/config.20140926.php:230 inc/config.php:226
+msgid "Fix video height"
+msgstr ""
+
+#: inc/config.20140926.php:231 inc/config.php:227
+msgid ""
+"Enable this option to fix video height when playback controls are not hidden"
+msgstr ""
+
+#: inc/config.20140926.php:237 inc/config.php:233 inc/widget.php:165
+msgid "Autoplay video or playlist"
+msgstr ""
+
+#: inc/config.20140926.php:238 inc/config.php:234
+msgid ""
+"Enable this option to start video playback right after block is rendered"
+msgstr ""
+
+#: inc/config.20140926.php:244 inc/config.php:240 inc/widget.php:166
+msgid "Mute video on autoplay"
+msgstr ""
+
+#: inc/config.20140926.php:245 inc/config.php:241
+msgid "Enable this option to mute video when start autoplay"
+msgstr ""
+
+#: inc/config.20140926.php:251 inc/config.php:247 inc/widget.php:167
+msgid "Hide related videos"
+msgstr ""
+
+#: inc/config.20140926.php:252 inc/config.php:248
+msgid "Enable this option to hide related videos after finished playback"
+msgstr ""
+
+#: inc/config.20140926.php:261 inc/config.php:257
+msgid "Content"
+msgstr ""
+
+#: inc/config.20140926.php:267 inc/config.php:263 inc/widget.php:172
+msgid "Show video title"
+msgstr ""
+
+#: inc/config.20140926.php:268 inc/config.php:264
+msgid "Enable this option to display title of video"
+msgstr ""
+
+#: inc/config.20140926.php:274 inc/config.php:270 inc/widget.php:173
+msgid "Show video description"
+msgstr ""
+
+#: inc/config.20140926.php:275 inc/config.php:271
+msgid "Enable this option to display description for video"
+msgstr ""
+
+#: inc/config.20140926.php:281 inc/config.php:277 inc/widget.php:174
+msgid "Description length"
+msgstr ""
+
+#: inc/config.20140926.php:282 inc/config.php:278
+msgid "Enter length for video description in characters (0 for full length)"
+msgstr ""
+
+#: inc/config.20140926.php:291 inc/config.php:287 inc/widget.php:175
+msgid "Et cetera string"
+msgstr ""
+
+#: inc/config.20140926.php:292 inc/config.php:288
+msgid "Indicator for shortened video description (default: …)"
+msgstr ""
+
+#: inc/config.20140926.php:293 inc/config.php:289
+msgid "..."
+msgstr ""
+
+#: inc/config.20140926.php:298 inc/config.php:294 inc/widget.php:176
+msgid "Hide annotations from video"
+msgstr ""
+
+#: inc/config.20140926.php:299 inc/config.php:295
+msgid ""
+"Enable this option to hide video annotations (custom text set by uploader "
+"over video during playback)"
+msgstr ""
+
+#: inc/config.20140926.php:305 inc/config.php:301 inc/widget.php:177
+msgid "Hide video info"
+msgstr ""
+
+#: inc/config.20140926.php:306 inc/config.php:302
+msgid ""
+"Enable this option to hide informations about video before play start (video "
+"title and uploader in overlay)"
+msgstr ""
+
+#: inc/config.20140926.php:315 inc/config.php:311 inc/widget.php:180
+msgid "Link to Channel"
+msgstr ""
+
+#: inc/config.20140926.php:321 inc/config.php:317 inc/widget.php:182
+msgid "Visit YouTube Channel text"
+msgstr ""
+
+#: inc/config.20140926.php:322 inc/config.php:318
+msgid "Use placeholder %channel% to insert channel name"
+msgstr ""
+
+#: inc/config.20140926.php:323 inc/config.php:319
+msgid "Visit my channel %channel%"
+msgstr ""
+
+#: inc/config.20140926.php:328 inc/config.php:324 inc/widget.php:183
+msgid "Show link to channel"
+msgstr ""
+
+#: inc/config.20140926.php:329 inc/config.php:325
+msgid ""
+"Enable this option to show customized link to channel at the bottom of YTC "
+"block"
+msgstr ""
+
+#: inc/config.20140926.php:335 inc/config.php:331
+msgid "Open YouTube channel page"
+msgstr ""
+
+#: inc/config.20140926.php:339 inc/config.php:335 inc/widget.php:186
+msgid "in same window"
+msgstr ""
+
+#: inc/config.20140926.php:340 inc/config.php:336 inc/widget.php:187
+msgid "in new window (JavaScript)"
+msgstr ""
+
+#: inc/config.20140926.php:341 inc/config.php:337 inc/widget.php:188
+msgid "in new window (Target)"
+msgstr ""
+
+#: inc/config.20140926.php:348 inc/config.php:344 inc/widget.php:191
+msgid "Link to channel instead to user"
+msgstr ""
+
+#: inc/config.20140926.php:349 inc/config.php:345
+msgid ""
+"Enable this option if link to your channel have <code>/channel/</code> "
+"instead <code>/user/</code> part in URL"
+msgstr ""
+
+#: inc/config.20140926.php:358 inc/config.php:354
+msgid "Tools"
+msgstr ""
+
+#: inc/config.20140926.php:375 inc/config.php:371
+msgid "Usage"
+msgstr ""
+
+#: inc/config.20140926.php:396 inc/config.php:392
+msgid "Support"
+msgstr ""
+
+#: inc/config.20140926.php:427 inc/config.php:423
+msgid " Options"
+msgstr ""
+
+#: inc/config.20140926.php:500 inc/config.php:496
+msgid ""
+"<p>Easy embed playable videos from YouTube.</p><p>Here you can set default "
+"options that will be used as defaults for new widgets, and for shortcode.</p>"
+msgstr ""
+
+#: inc/config.php:145
 #, php-format
-msgid   "Visit channel %1$s"
-msgstr  ""
+msgid ""
+"Enable this option to protect your visitors <a href=\"%s\" target=\"_blank"
+"\">privacy</a>."
+msgstr ""
 
-#: ../youtube-channel.php:219
+#: inc/widget.php:11
+msgid "Youtube Channel"
+msgstr ""
+
+#: inc/widget.php:12
+msgid "Serve YouTube videos from channel or playlist right to widget area"
+msgstr ""
+
+#: inc/widget.php:85
+msgid "Widget Title"
+msgstr ""
+
+#: inc/widget.php:85
+msgid "Title for widget"
+msgstr ""
+
+#: inc/widget.php:88
+msgid "Custom CSS Class"
+msgstr ""
+
+#: inc/widget.php:88
+msgid "Enter custom class for YTC block, if you wish to target block styling"
+msgstr ""
+
+#: inc/widget.php:91
+msgid "Channel ID"
+msgstr ""
+
+#: inc/widget.php:91
+msgid "YouTube Channel name (not URL to channel)"
+msgstr ""
+
+#: inc/widget.php:94
+msgid "Playlist ID"
+msgstr ""
+
+#: inc/widget.php:94
+msgid "YouTube Playlist ID (not playlist name)"
+msgstr ""
+
+#: inc/widget.php:104
+msgid ""
+"Enable this option to embed YouTube playlist widget instead single video "
+"from playlist"
+msgstr ""
+
+#: inc/widget.php:123
+msgid "Cache feed"
+msgstr ""
+
+#: inc/widget.php:130 inc/widget.php:132
+msgid "video(s)"
+msgstr ""
+
+#: inc/widget.php:135
+msgid "Enable this option to protect your visitors privacy"
+msgstr ""
+
+#: inc/widget.php:135
 #, php-format
-msgid   "Watch video %1$s published on %2$s"
-msgstr  ""
+msgid "Use <a href=\"%s\" target=\"_blank\">Enhanced Privacy</a>"
+msgstr ""
 
-#: ../youtube-channel.php:64
-msgid   "What to show?"
-msgstr  ""
+#: inc/widget.php:142
+msgid "Video Settings"
+msgstr ""
 
-#: ../youtube-channel.php:48
-msgid   "Widget Title:"
-msgstr  ""
+#: inc/widget.php:143
+msgid "Aspect ratio"
+msgstr ""
 
-#: ../youtube-channel.php:54
-msgid   "Width"
-msgstr  ""
+#: inc/widget.php:151
+msgid "Width"
+msgstr ""
 
-#: ../youtube-channel.php:23
-msgid   "YouTube Channel"
-msgstr  ""
+#: inc/widget.php:151
+msgid "Set video width in pixels"
+msgstr ""
 
-#: ../youtube-channel.php:69
-msgid   "chromeless video"
-msgstr  ""
+#: inc/widget.php:151
+msgid "default"
+msgstr ""
 
-#: ../youtube-channel.php:58
-msgid   "custom"
-msgstr  ""
+#: inc/widget.php:162
+msgid "Use light theme (default is dark)"
+msgstr ""
 
-#: ../youtube-channel.php:54 ../youtube-channel.php:55
-msgid   "default"
-msgstr  ""
+#: inc/widget.php:164
+msgid "Fix height taken by controls"
+msgstr ""
 
-#: ../youtube-channel.php:68
-msgid   "iframe (HTML5 player)"
-msgstr  ""
+#: inc/widget.php:170
+msgid "Content Layout"
+msgstr ""
 
-#: ../youtube-channel.php:259
-msgid   "in new window/tab"
-msgstr  ""
+#: inc/widget.php:174
+msgid ""
+"Set number of characters to cut down video description to (0 means full "
+"length)"
+msgstr ""
 
-#: ../youtube-channel.php:67
-msgid   "object (flash player)"
-msgstr  ""
+#: inc/widget.php:175
+msgid "Default: &amp;hellip;"
+msgstr ""
 
-#: ../youtube-channel.php:66
-msgid   "thumbnail"
-msgstr  ""
+#: inc/widget.php:182
+msgid ""
+"Default: Visit channel %channel%. Use placeholder %channel% to insert "
+"channel name."
+msgstr ""
+
+#: inc/widget.php:194
+msgid "Debug YTC"
+msgstr ""
+
+#: inc/widget.php:196
+msgid "Enable debugging"
+msgstr ""
+
+#: inc/widget.php:212
+#, php-format
+msgid ""
+"Insert debug data to <a href=\"%s\" target=\"_support\">support forum</a>."
+"<br />Please do not remove channel and playlist ID`s. If you are concerned "
+"about privacy, send this debug log to email %s"
+msgstr ""
+
+#: youtube-channel.php:90
+#, php-format
+msgid ""
+"Please review <a href=\"%s\">global settings</a>, YTC widgets and shortcodes."
+msgstr ""
+
+#: youtube-channel.php:93
+#, php-format
+msgid ""
+"If you use caching for any YTC widget or shortcode, please <strong>ReCache</"
+"strong> feeds in <strong>Tools</strong> section of <a href=\"%s\">plugin "
+"settings</a> page."
+msgstr ""
+
+#: youtube-channel.php:96
+#, php-format
+msgid ""
+"We switched to <em>Redux Framework</em> so please review global plugin <a "
+"href=\"%s\">settings page</a>."
+msgstr ""
+
+#: youtube-channel.php:101
+msgid "updated to version"
+msgstr ""
+
+#: youtube-channel.php:101
+msgid "I did this already, dismiss notice!"
+msgstr ""
+
+#: youtube-channel.php:108
+#, php-format
+msgid ""
+"To configure global <strong>%s</strong> options, you need to install and "
+"activate <strong>%s</strong>."
+msgstr ""
+
+#: youtube-channel.php:113
+msgid "Settings"
+msgstr ""
+
+#: youtube-channel.php:486
+msgid "No items"
+msgstr ""
+
+#: youtube-channel.php:486
+msgid "Check here why"
+msgstr ""
+
+#: youtube-channel.php:547
+#, php-format
+msgid "Visit channel %1$s"
+msgstr ""
+
+#: youtube-channel.php:554
+msgid "in new window/tab"
+msgstr ""
+
+#: youtube-channel.php:651
+#, php-format
+msgid "Watch video %1$s published on %2$s"
+msgstr ""

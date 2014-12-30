@@ -1,8 +1,8 @@
 <p>You also can use shortcode <code>[youtube_channel]</code> with options listed below (all options are optional):</p>
 <h3>General Settings</h3>
 <ul>
-	<li><code>channel</code> <em>(string)</em> ID of preferred YouTube channel. Do not set full URL to channel, but just last part from URL - ID (name)</li>
-	<li><code>playlist</code> <em>(string)</em> ID of preferred YouTube playlist.</li>
+    <li><code>channel</code> <em>(string)</em> ID of preferred YouTube channel. Do not set full URL to channel, but just last part from URL - ID (name)</li>
+    <li><code>playlist</code> <em>(string)</em> ID of preferred YouTube playlist.</li>
     <li><code>res</code> <em>(int)</em> Resource to use for feed:
     <ul>
         <li>&bullet; <code>0</code> Channel</li>
@@ -26,6 +26,7 @@
         <li>&bullet; <code>2</code> 16:10 (computer screen)</li>
         <li>&bullet; <code>1</code> 4:3</li>
     </ul></li>
+    <li><code>responsive</code> <em>(bool)</em> Distribute one full width video per row.</li>
     <li><code>width</code> <em>(int)</em> Width of thumbnail and video in pixels.</li>
     <li><code>show</code> <em>(string)</em> Object that will be used to represent video. We have couple predefined options:
     <ul>
@@ -42,6 +43,7 @@
     <li><code>autoplay</code> <em>(bool)</em> Enable autoplay of first video in YTC video stack by setting this option to <code>1</code> or <code>true</code></li>
     <li><code>mute</code> <em>(bool)</em> Set this option to <code>1</code> or <code>true</code> to mute videos set to autoplay on load</li>
     <li><code>norel</code> <em>(bool)</em> Set this option to <code>1</code> or <code>true</code> to hire related videos after finished playbak</li>
+    <li><code>nobrand</code> <em>(bool)</em> Set this option to <code>1</code> or <code>true</code> to hire YouTube logo from playback control bar</li>
 </ul>
 <h3>Content Layout</h3>
 <ul>
