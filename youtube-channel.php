@@ -1,11 +1,12 @@
 <?php
 /*
-Plugin Name: YouTube Channel
-Plugin URI: http://urosevic.net/wordpress/plugins/youtube-channel/
-Description: <a href="widgets.php">Widget</a> that display latest video thumbnail, iframe (HTML5 video), object (Flash video) or chromeless video from YouTube Channel or Playlist.
-Author: Aleksandar Urošević
-Version: 2.4.1.3
-Author URI: http://urosevic.net/
+Plugin Name: Lightweight YouTube Channel Widget
+Plugin URI: https://github.com/MaTachi/lightweight-wordpress-channel-widget
+Description: <a href="widgets.php">Widget</a> that displays video thumbnails
+from a YouTube channel or playlist.
+Author: Daniel Jonsson
+Version: 10.0
+Author URI: https://github.com/MaTachi/lightweight-wordpress-channel-widget
 */
 
 // Exit if accessed directly
@@ -17,7 +18,7 @@ if ( !class_exists('WPAU_YOUTUBE_CHANNEL') )
 	{
 
 		public $plugin_slug    = "youtube-channel";
-		private $plugin_version = "2.4.1.3";
+		private $plugin_version = "10.0";
 		private $plugin_option  = "youtube_channel_defaults";
 		private $channel_id     = "urkekg";
 		private $playlist_id    = "PLEC850BE962234400";
