@@ -14,7 +14,16 @@ written by [Aleksandar Urošević](http://urosevic.net/). See
 | --- | ---------------------------------------- | ----------------------- |
 | PHP LOC | 586 | 1849 |
 | PHP SLOC | 415 | 1289 |
-| Plugin dependencies | - | [Redux Framework](http://reduxframework.com/) |
-| JavaScript minimized | 0 kB | 24 kB |
-| CSS minimized | 1.1 kB | 7.1 kB |
+| WordPress plugin dependencies | - | [Redux Framework](http://reduxframework.com/) |
+| JavaScript dependencies | - | [jQuery](http://jquery.com/), [FitVids.JS](http://fitvidsjs.com/), [Magnific Popup](http://dimsemenov.com/plugins/magnific-popup/) |
+| JavaScript w/ jQuery, minimized * | 0 B | 119.8 kB † |
+| JavaScript w/o jQuery, minimized | 0 B | 24.0 kB ‡ |
+| CSS, minimized | 1.1 kB § | 7.1 kB ‖ |
 
+\* jQuery version 1.11.1 bundled with WordPress 4.1.  
+† 95807 + 22012 + 1746 + 270 = 119835  
+‡ 22012 + 1746 + 270 = 24028  
+§ 1139 = 1139  
+‖ 5998 + 1139 = 7137
+
+Note, SI unit prefixes are used, where k = kilo = 1000.
