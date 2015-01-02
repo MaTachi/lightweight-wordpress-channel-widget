@@ -1,13 +1,14 @@
 <?php
-
-/* youtube widget */
-class WPAU_YOUTUBE_CHANNEL_Widget extends WP_Widget {
+/**
+ * The widget that WordPress will register.
+ */
+class LYCW_Widget extends WP_Widget {
 
 	public function __construct() {
-		global $WPAU_YOUTUBE_CHANNEL;
+		global $LYCW;
 		// Initialize Widget
 		parent::__construct(
-			$WPAU_YOUTUBE_CHANNEL->plugin_slug,
+			$LYCW->plugin_slug,
 			__( 'Youtube Channel' , 'youtube-channel' ),
 			array(
 				'description' => __(
@@ -19,7 +20,7 @@ class WPAU_YOUTUBE_CHANNEL_Widget extends WP_Widget {
 	}
 
 	public function widget( $args, $instance ) {
-		global $WPAU_YOUTUBE_CHANNEL;
+		global $LYCW;
 		// outputs the content of the widget
 		extract( $args );
 
@@ -30,14 +31,14 @@ class WPAU_YOUTUBE_CHANNEL_Widget extends WP_Widget {
 		if ( $title ) {
 			$output[] = $before_title . $title . $after_title;
 		}
-		$output[] = implode($WPAU_YOUTUBE_CHANNEL->output($instance));
+		$output[] = implode($LYCW->output($instance));
 		$output[] = $after_widget;
 
 		echo implode('',array_values($output));
 	}
 
 	public function form( $instance ) {
-		global $WPAU_YOUTUBE_CHANNEL;
+		global $LYCW;
 		// outputs the options form for widget settings
 		// General Options
 		$title         = (!empty($instance['title'])) ? esc_attr($instance['title']) : '';
@@ -91,7 +92,7 @@ class WPAU_YOUTUBE_CHANNEL_Widget extends WP_Widget {
 			<label for="<?php echo $this->get_field_id('cache_time');	?>"><?php _e('Cache feed', 'youtube-channel'); ?>:</label>
 			<select class="widefat" id="<?php echo $this->get_field_id( 'cache_time' ); ?>" name="<?php echo $this->get_field_name( 'cache_time' ); ?>">
 				<option value="0"<?php selected( $cache_time, 0 ); ?>><?php _e('Do not cache', 'youtube-channel'); ?></option>
-				<?php echo $WPAU_YOUTUBE_CHANNEL->cache_time($cache_time); ?>
+				<?php echo $this->cache_time( $cache_time ); ?>
 			</select>
 		</p>
 		<p>
@@ -168,11 +169,78 @@ class WPAU_YOUTUBE_CHANNEL_Widget extends WP_Widget {
 		return $out;
 	}
 
-} // end class WPAU_YOUTUBE_CHANNEL_Widget()
+	/**
+	 * Get string of cache time dropdown menu alternatives.
+	 *
+	 * @param int $cache_time The selected cache length in seconds.
+	 * @return string HTML string with all selectable cache length options.
+	 */
+	private function cache_time( $cache_time ) {
+		$times = array(
+			'minute' => array(
+				1  => __('1 minute', 'youtube-channel'),
+				5  => __('5 minutes', 'youtube-channel'),
+				15 => __('15 minutes', 'youtube-channel'),
+				30 => __('30 minutes', 'youtube-channel')
+			),
+			'hour' => array(
+				1  => __('1 hour', 'youtube-channel'),
+				2  => __('2 hours', 'youtube-channel'),
+				5  => __('5 hours', 'youtube-channel'),
+				10 => __('10 hours', 'youtube-channel'),
+				12 => __('12 hours', 'youtube-channel'),
+				18 => __('18 hours', 'youtube-channel')
+			),
+			'day' => array(
+				1 => __('1 day', 'youtube-channel'),
+				2 => __('2 days', 'youtube-channel'),
+				3 => __('3 days', 'youtube-channel'),
+				4 => __('4 days', 'youtube-channel'),
+				5 => __('5 days', 'youtube-channel'),
+				6 => __('6 days', 'youtube-channel')
+			),
+			'week' => array(
+				1 => __('1 week', 'youtube-channel'),
+				2 => __('2 weeks', 'youtube-channel'),
+				3 => __('3 weeks', 'youtube-channel'),
+				4 => __('1 month', 'youtube-channel')
+			)
+		);
 
+		$out = '';
+		foreach ( $times as $period => $timeset ) {
+			switch ($period) {
+				case 'minute':
+					$sc = MINUTE_IN_SECONDS;
+					break;
+				case 'hour':
+					$sc = HOUR_IN_SECONDS;
+					break;
+				case 'day':
+					$sc = DAY_IN_SECONDS;
+					break;
+				case 'week':
+					$sc = WEEK_IN_SECONDS;
+			}
 
-// register Foo_Widget widget
-function wpau_register_youtube_channel_widget() {
-    register_widget( 'WPAU_YOUTUBE_CHANNEL_Widget' );
+			foreach ( $timeset as $n => $s ) {
+				$sec = $sc * $n;
+				$out .= sprintf(
+					'<option value="%d" %s>%s</option>',
+					$sec,
+					selected( $cache_time, $sec, 0 ),
+					__( $s, $this->plugin_slug )
+				);
+				unset($sec);
+			}
+		}
+		return $out;
+	}
+
 }
-add_action( 'widgets_init', 'wpau_register_youtube_channel_widget' );
+
+// Register widget.
+function lycw_register_widget() {
+    register_widget( 'LYCW_Widget' );
+}
+add_action( 'widgets_init', 'lycw_register_widget' );
