@@ -155,7 +155,7 @@ class LYCW_Widget extends WP_Widget {
 		} else {
 			$instance['fetch_videos'] = 5;
 		}
-		
+
 		$instance['showtitle']     = (isset($new_instance['showtitle'])) ? $new_instance['showtitle'] : false;
 		$instance['showvidesc']    = (isset($new_instance['showvidesc'])) ? $new_instance['showvidesc'] : false;
 		$instance['descappend']    = strip_tags($new_instance['descappend']);
