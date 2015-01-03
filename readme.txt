@@ -54,7 +54,7 @@ You can use the `style.css` from your theme to style the widget's content.
 = Developer =
 
 The full source code of the plugin can be found on Github at
-[github.com/MaTachi/lightweight-wordpress-channel-widget](https://github.com/MaTachi/lightweight-wordpress-channel-widget).
+[github.com/MaTachi/lightweight-youtube-channel-widget](https://github.com/MaTachi/lightweight-youtube-channel-widget).
 
 = Credits =
 

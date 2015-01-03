@@ -1,12 +1,12 @@
 <?php
 /*
 Plugin Name: Lightweight YouTube Channel Widget
-Plugin URI: https://github.com/MaTachi/lightweight-wordpress-channel-widget
+Plugin URI: https://github.com/MaTachi/lightweight-youtube-channel-widget
 Description: <a href="widgets.php">Widget</a> that displays video thumbnails
 from a YouTube channel or playlist.
 Author: Daniel Jonsson
 Version: 10.0
-Author URI: https://github.com/MaTachi/lightweight-wordpress-channel-widget
+Author URI: https://github.com/MaTachi/lightweight-youtube-channel-widget
 */
 
 // Exit if accessed directly
