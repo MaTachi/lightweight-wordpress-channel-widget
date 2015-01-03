@@ -20,9 +20,9 @@ useful as long as the there still exists GPL licensed code in the project.
 
 |     | Lightweight YouTube Channel Widget 10.0  | YouTube Channel 2.4.1.3 |
 | --- | ---------------------------------------- | ----------------------- |
-| PHP SLOC * | 447 | 1452 |
-| PHP LOC * | 633 | 1853 |
-| SLOC/LOC | 0.71 | 0.78 |
+| PHP SLOC * | 438 | 1452 |
+| PHP LOC * | 623 | 1853 |
+| SLOC/LOC | 0.70 | 0.78 |
 | WordPress plugin dependencies | - | [Redux Framework](http://reduxframework.com/) |
 | JavaScript dependencies | - | [jQuery](http://jquery.com/), [FitVids.JS](http://fitvidsjs.com/), [Magnific Popup](http://dimsemenov.com/plugins/magnific-popup/) |
 | JavaScript w/ jQuery, minimized † | 0 B | 119.8 kB ‡ |
