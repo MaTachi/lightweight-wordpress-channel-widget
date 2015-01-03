@@ -12,19 +12,21 @@ written by [Aleksandar Urošević](http://urosevic.net/). See
 
 |     | Lightweight YouTube Channel Widget 10.0  | YouTube Channel 2.4.1.3 |
 | --- | ---------------------------------------- | ----------------------- |
-| PHP LOC | 586 | 1849 |
-| PHP SLOC | 415 | 1289 |
+| PHP SLOC * | 447 | 1452 |
+| PHP LOC * | 633 | 1853 |
+| SLOC/LOC | 0.71 | 0.78 |
 | WordPress plugin dependencies | - | [Redux Framework](http://reduxframework.com/) |
 | JavaScript dependencies | - | [jQuery](http://jquery.com/), [FitVids.JS](http://fitvidsjs.com/), [Magnific Popup](http://dimsemenov.com/plugins/magnific-popup/) |
-| JavaScript w/ jQuery, minimized * | 0 B | 119.8 kB † |
-| JavaScript w/o jQuery, minimized | 0 B | 24.0 kB ‡ |
-| CSS, minimized | 1.1 kB § | 7.1 kB ‖ |
+| JavaScript w/ jQuery, minimized † | 0 B | 119.8 kB ‡ |
+| JavaScript w/o jQuery, minimized | 0 B | 24.0 kB § |
+| CSS, minimized | 1.1 kB ‖ | 7.1 kB ¶ |
 
-\* jQuery version 1.11.1 bundled with WordPress 4.1.  
-† 95807 + 22012 + 1746 + 270 = 119835  
-‡ 22012 + 1746 + 270 = 24028  
-§ 1139 = 1139  
-‖ 5998 + 1139 = 7137
+\* Calculated by [CLOC](http://cloc.sourceforge.net/).  
+† jQuery version 1.11.1 bundled with WordPress 4.1.  
+‡ 95807 + 22012 + 1746 + 270 = 119835  
+§ 22012 + 1746 + 270 = 24028  
+‖ 1139 = 1139  
+¶ 5998 + 1139 = 7137
 
 Note, SI unit prefixes are used, where k = kilo = 1000.
 
