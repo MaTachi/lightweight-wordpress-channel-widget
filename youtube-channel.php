@@ -22,10 +22,10 @@ if ( !class_exists( 'LYCW' ) ):
  */
 class LYCW {
 
-	public $plugin_slug          = "lightweight-youtube-channel-widget";
-	private $plugin_version      = "10.0";
-	private $default_channel_id  = "urkekg";
-	private $default_playlist_id = "PLEC850BE962234400";
+	public $plugin_slug          = 'lightweight-youtube-channel-widget';
+	private $plugin_version      = '10.0';
+	private $default_channel_id  = 'misesmedia';
+	private $default_playlist_id = 'PLALopHfWkFlFTj__lkebZfUw5s-CWVuIt';
 
 	function __construct() {
 		// Load plugin translations.
@@ -58,6 +58,10 @@ class LYCW {
 
 	/**
 	 * Print list of videos.
+	 *
+	 * @param array $instance A setup of variables for this widget.
+	 * @return array An array of strings making up the HTML to display the
+	 *     video list.
 	 */
 	public function output( $instance ) {
 		// Get channel name.
@@ -73,8 +77,6 @@ class LYCW {
 		} else {
 			$playlist = $this->default_playlist_id;
 		}
-		// Trim PL in front of the playlist ID.
-		$playlist = preg_replace( '/^PL/', '', $playlist );
 
 		// The type of resource to display.
 		$type_of_resource = $instance['type_of_resource'];
@@ -100,7 +102,7 @@ class LYCW {
 
 		$output = array();
 
-		$output[] = '<div class="youtube_channel '.$class.'">';
+		$output[] = '<div class="youtube_channel ' . $class . '">';
 
 		// Do we need cache?
 		if ( $instance['cache_time'] > 0 ) {
@@ -141,7 +143,7 @@ class LYCW {
 		$json_output = json_decode( $json );
 
 		$error_found = false;
-		$entries_found = true;
+		$entries_found = false;
 
 		if (
 			!is_wp_error( $json_output ) &&
@@ -154,6 +156,7 @@ class LYCW {
 			if ( sizeof( $videos ) <= 0 ) {
 				$entries_found = false;
 			} else {
+				$entries_found = true;
 				$fetch_videos = sizeof( $videos );
 			}
 		} else {
@@ -219,15 +222,15 @@ class LYCW {
 		switch ( $type_of_resource ) {
 			case 'channel':
 			default:
-				$feed_url = 'http://gdata.youtube.com/feeds/base/users/' .
+				$feed_url = 'http://gdata.youtube.com/feeds/api/users/' .
 					$channel . '/uploads';
 				break;
 			case 'favorites':
-				$feed_url = 'http://gdata.youtube.com/feeds/base/users/' .
+				$feed_url = 'http://gdata.youtube.com/feeds/api/users/' .
 					$channel . '/favorites';
 				break;
 			case 'playlist':
-				$playlist = $this->clean_playlist_id( $playlist );
+				$playlist = $this->extract_playlist_id( $playlist );
 				$feed_url = 'http://gdata.youtube.com/feeds/api/playlists/' .
 					$playlist;
 		}
@@ -261,7 +264,7 @@ class LYCW {
 	 *     object.
 	 * @param array $instance A setup of variables for this widget.
 	 * @param integer $i The placement of the video block, starting from 1.
-	 * @return array An array of strings making up the HTML to distlay the
+	 * @return array An array of strings making up the HTML to display the
 	 *     video block.
 	 */
 	private function render_video_block( $video, $instance, $i) {
@@ -314,7 +317,7 @@ class LYCW {
 			default: $arclass = 'ar16_9';
 		}
 		$title = sprintf(
-			__('Watch video %1$s published on %2$s', 'youtube-channel' ),
+			__('Watch video %1$s published on %2$s', $this->plugin_slug ),
 			$yt_title, $yt_date
 		);
 		$output[] = sprintf(
@@ -326,59 +329,53 @@ class LYCW {
 
 		// Do we need to show video description?
 		if ( $instance['showvidesc'] ) {
-			preg_match( '/><span>(.*)<\/span><\/div>/', $video->content->{'$t'},
-				$videsc );
-			if ( empty($videsc[1]) ) {
-				$videsc[1] = $video->content->{'$t'};
-			}
+			$description = $video->content->{'$t'};
 
-			// clean HTML
-			$nohtml = explode( '</div>', $videsc[1] );
-			if ( sizeof($nohtml) > 1 ) {
-				$videsc[1] = strip_tags( $nohtml[2] );
-				unset( $nohtml );
-			} else {
-				$videsc[1] = strip_tags( $videsc[1] );
-			}
+			// Remove HTML tags
+			$description = strip_tags( $description );
 
-			if ( $instance['videsclen'] > 0 ) {
-				if ( strlen($videsc[1]) > $instance['videsclen'] ) {
-					$video_description = substr( $videsc[1], 0,
-						$instance['videsclen'] );
-					if ( $instance['descappend'] ) {
-						$etcetera = $instance['descappend'];
-					} else {
-						$etcetera = '&hellip;';
-					}
+			if (
+				$instance['videsclen'] > 0 and
+				strlen( $description ) > $instance['videsclen']
+			) {
+				$description = substr(
+					$description, 0, $instance['videsclen']
+				);
+				if ( $instance['descappend'] ) {
+					$etcetera = $instance['descappend'];
+				} else {
+					$etcetera = '&hellip;';
 				}
 			} else {
-				$video_description = $videsc[1];
 				$etcetera = '';
 			}
-			if ( !empty( $video_description ) ) {
+
+			if ( !empty( $description ) ) {
 				$output[] = sprintf(
 					'<p class="ytc_description">%s%s</p>',
-					$video_description, $etcetera
+					$description, $etcetera
 				);
 			}
 		}
+
 		$output[] = '</div><!-- .ytc_video_container -->';
 
 		return $output;
 	}
 
-	private function youtube_domain($instance) {
-		return 'www.youtube.com';
-	}
-
-	private function clean_playlist_id($playlist) {
-		if ( substr($playlist,0,4) == 'http' ) {
-			// If URL provided, extract playlist ID
+	/**
+	 * Extract the playlist ID if the provided string is a URL to a YouTube 
+	 * playlist.
+	 *
+	 * @param string $playlist A playlist ID or a URL to a playlist.
+	 * @return string A playlist ID.
+	 */
+	private function extract_playlist_id( $playlist ) {
+		if ( substr( $playlist, 0, 4 ) == 'http' ) {
+			// If URL provided, extract playlist ID.
 			$playlist = preg_replace(
-				'/.*list=PL([A-Za-z0-9\-\_]*).*/', '$1', $playlist
+				'/.*list=(PL[A-Za-z0-9\-\_]*).*/', '$1', $playlist
 			);
-		} else if ( substr( $playlist, 0, 2 ) == 'PL' ) {
-			$playlist = substr( $playlist, 2 );
 		}
 		return $playlist;
 	}

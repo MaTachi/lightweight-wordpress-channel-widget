@@ -9,11 +9,11 @@ class LYCW_Widget extends WP_Widget {
 		// Initialize Widget
 		parent::__construct(
 			$LYCW->plugin_slug,
-			__( 'Youtube Channel', 'youtube-channel' ),
+			__( 'Youtube Channel',  $LYCW->plugin_slug ),
 			array(
 				'description' => __(
 					'Show YouTube video thumbnails from a channel or playlist',
-					'youtube-channel'
+ 					$LYCW->plugin_slug
 				)
 			)
 		);
@@ -31,7 +31,7 @@ class LYCW_Widget extends WP_Widget {
 		if ( $title ) {
 			$output[] = $before_title . $title . $after_title;
 		}
-		$output[] = implode($LYCW->output( $instance ));
+		$output[] = implode( $LYCW->output( $instance ) );
 		$output[] = $after_widget;
 
 		echo implode( '', array_values( $output ) );
@@ -69,62 +69,62 @@ class LYCW_Widget extends WP_Widget {
 		?>
 
 		<p>
-			<label for="<?php echo $this->get_field_id('title');	?>"><?php _e('Widget Title', 'youtube-channel');	?>:<input type="text" class="widefat" id="<?php echo $this->get_field_id('title');		?>" name="<?php echo $this->get_field_name('title');	?>" value="<?php echo $title;		?>" title="<?php _e('Title for widget', 'youtube-channel'); ?>" /></label>
+			<label for="<?php echo $this->get_field_id('title');	?>"><?php _e('Widget Title', $LYCW->plugin_slug); ?>:<input type="text" class="widefat" id="<?php echo $this->get_field_id('title');		?>" name="<?php echo $this->get_field_name('title');	?>" value="<?php echo $title;		?>" title="<?php _e('Title for widget', $LYCW->plugin_slug); ?>" /></label>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id('class');	?>"><?php _e('Custom CSS Class', 'youtube-channel'); ?>:<input type="text" class="widefat" id="<?php echo $this->get_field_id('class');		?>" name="<?php echo $this->get_field_name('class');	?>" value="<?php echo $class;		?>" title="<?php _e('Enter custom class for YTC block, if you wish to target block styling', 'youtube-channel'); ?>" /></label>
+			<label for="<?php echo $this->get_field_id('class'); ?>"><?php _e('Custom CSS Class', $LYCW->plugin_slug); ?>:<input type="text" class="widefat" id="<?php echo $this->get_field_id('class');		?>" name="<?php echo $this->get_field_name('class');	?>" value="<?php echo $class;		?>" title="<?php _e('Enter custom class for YTC block, if you wish to target block styling', $LYCW->plugin_slug); ?>" /></label>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id('channel');	?>"><?php _e('Channel ID', 'youtube-channel'); ?>:<input type="text" class="widefat" id="<?php echo $this->get_field_id('channel');		?>" name="<?php echo $this->get_field_name('channel');	?>" value="<?php echo $channel;		?>" title="<?php _e('YouTube Channel name (not URL to channel)', 'youtube-channel'); ?>" /></label>
+			<label for="<?php echo $this->get_field_id('channel');	?>"><?php _e('Channel ID', $LYCW->plugin_slug); ?>:<input type="text" class="widefat" id="<?php echo $this->get_field_id('channel');		?>" name="<?php echo $this->get_field_name('channel');	?>" value="<?php echo $channel;		?>" title="<?php _e('YouTube Channel name (not URL to channel)', $LYCW->plugin_slug); ?>" /></label>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id('playlist');	?>"><?php _e('Playlist ID', 'youtube-channel'); ?>:<input type="text" class="widefat" id="<?php echo $this->get_field_id('playlist');	?>" name="<?php echo $this->get_field_name('playlist'); ?>" value="<?php echo $playlist;	?>" title="<?php _e('YouTube Playlist ID (not playlist name)', 'youtube-channel'); ?>" /></label>
+			<label for="<?php echo $this->get_field_id('playlist');	?>"><?php _e('Playlist ID', $LYCW->plugin_slug); ?>:<input type="text" class="widefat" id="<?php echo $this->get_field_id('playlist');	?>" name="<?php echo $this->get_field_name('playlist'); ?>" value="<?php echo $playlist;	?>" title="<?php _e('YouTube Playlist ID (not playlist name)', $LYCW->plugin_slug); ?>" /></label>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id('type_of_resource'); ?>"><?php _e('Resource to use', 'youtube-channel'); ?>:</label>
+			<label for="<?php echo $this->get_field_id('type_of_resource'); ?>"><?php _e('Resource to use', $LYCW->plugin_slug); ?>:</label>
 			<select class="widefat" id="<?php echo $this->get_field_id( 'type_of_resource' ); ?>" name="<?php echo $this->get_field_name( 'type_of_resource' ); ?>">
-				<option value="channel"<?php selected( $type_of_resource, 'channel' ); ?>><?php _e('Channel', 'youtube-channel'); ?></option>
-				<option value="favorites"<?php selected( $type_of_resource, 'favorites' ); ?>><?php _e('Favorites', 'youtube-channel'); ?></option>
-				<option value="playlist"<?php selected( $type_of_resource, 'playlist' ); ?>><?php _e('Playlist', 'youtube-channel'); ?></option>
+				<option value="channel"<?php selected( $type_of_resource, 'channel' ); ?>><?php _e('Channel', $LYCW->plugin_slug); ?></option>
+				<option value="favorites"<?php selected( $type_of_resource, 'favorites' ); ?>><?php _e('Favorites', $LYCW->plugin_slug); ?></option>
+				<option value="playlist"<?php selected( $type_of_resource, 'playlist' ); ?>><?php _e('Playlist', $LYCW->plugin_slug); ?></option>
 			</select>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id('cache_time');	?>"><?php _e('Cache feed', 'youtube-channel'); ?>:</label>
+			<label for="<?php echo $this->get_field_id('cache_time');	?>"><?php _e('Cache feed', $LYCW->plugin_slug); ?>:</label>
 			<select class="widefat" id="<?php echo $this->get_field_id( 'cache_time' ); ?>" name="<?php echo $this->get_field_name( 'cache_time' ); ?>">
-				<option value="0"<?php selected( $cache_time, 0 ); ?>><?php _e('Do not cache', 'youtube-channel'); ?></option>
+				<option value="0"<?php selected( $cache_time, 0 ); ?>><?php _e('Do not cache', $LYCW->plugin_slug); ?></option>
 				<?php echo $this->cache_time( $cache_time ); ?>
 			</select>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id('fetch_videos'); ?>"><?php _e('Fetch', 'youtube-channel'); ?>: <input class="small-text" id="<?php echo $this->get_field_id('fetch_videos'); ?>" name="<?php echo $this->get_field_name('fetch_videos'); ?>" type="number" min="2" value="<?php echo $fetch_videos; ?>" title="<?php _e('Number of videos that will be used for random pick (min 2, max 50, default 25)', 'youtube-channel'); ?>" /> <?php _e('video(s)', 'youtube-channel'); ?></label>
+			<label for="<?php echo $this->get_field_id('fetch_videos'); ?>"><?php _e('Fetch', $LYCW->plugin_slug); ?>: <input class="small-text" id="<?php echo $this->get_field_id('fetch_videos'); ?>" name="<?php echo $this->get_field_name('fetch_videos'); ?>" type="number" min="2" value="<?php echo $fetch_videos; ?>" title="<?php _e('Number of videos that will be used for random pick (min 2, max 50, default 25)', $LYCW->plugin_slug); ?>" /> <?php _e('video(s)', $LYCW->plugin_slug); ?></label>
 			<br />
-			<label for="<?php echo $this->get_field_id('show_videos'); ?>"><?php _e('Show', 'youtube-channel'); ?>:</label> <input class="small-text" id="<?php echo $this->get_field_id('show_videos'); ?>" name="<?php echo $this->get_field_name('show_videos'); ?>" type="number" min="1" value="<?php echo ( $show_videos ) ? $show_videos : '1'; ?>" title="<?php _e('Number of videos to display', 'youtube-channel'); ?>" /> <?php _e('video(s)', 'youtube-channel'); ?>
+			<label for="<?php echo $this->get_field_id('show_videos'); ?>"><?php _e('Show', $LYCW->plugin_slug); ?>:</label> <input class="small-text" id="<?php echo $this->get_field_id('show_videos'); ?>" name="<?php echo $this->get_field_name('show_videos'); ?>" type="number" min="1" value="<?php echo ( $show_videos ) ? $show_videos : '1'; ?>" title="<?php _e('Number of videos to display', $LYCW->plugin_slug); ?>" /> <?php _e('video(s)', $LYCW->plugin_slug); ?>
 		</p>
 		<p>
-			<input class="checkbox" type="checkbox" <?php checked( (bool) $fix_no_items, true ); ?> id="<?php echo $this->get_field_id( 'fix_no_items' ); ?>" name="<?php echo $this->get_field_name( 'fix_no_items' ); ?>" title="<?php _e('Enable this option if you get error No Item', 'youtube-channel'); ?>" /> <label for="<?php echo $this->get_field_id( 'fix_no_items' ); ?>"><?php _e('Fix <em>No items</em> error/Respect playlist order', 'youtube-channel'); ?></label>
+			<input class="checkbox" type="checkbox" <?php checked( (bool) $fix_no_items, true ); ?> id="<?php echo $this->get_field_id( 'fix_no_items' ); ?>" name="<?php echo $this->get_field_name( 'fix_no_items' ); ?>" title="<?php _e('Enable this option if you get error No Item', $LYCW->plugin_slug); ?>" /> <label for="<?php echo $this->get_field_id( 'fix_no_items' ); ?>"><?php _e('Fix <em>No items</em> error/Respect playlist order', $LYCW->plugin_slug); ?></label>
 			<br />
-			<input class="checkbox" type="checkbox" <?php checked( (bool) $randomize_videos, true ); ?> id="<?php echo $this->get_field_id( 'randomize_videos' ); ?>" name="<?php echo $this->get_field_name( 'randomize_videos' ); ?>" title="<?php _e('Get random videos of all fetched from channel or playlist', 'youtube-channel'); ?>" /> <label for="<?php echo $this->get_field_id( 'randomize_videos' ); ?>"><?php _e('Show random video', 'youtube-channel'); ?></label>
+			<input class="checkbox" type="checkbox" <?php checked( (bool) $randomize_videos, true ); ?> id="<?php echo $this->get_field_id( 'randomize_videos' ); ?>" name="<?php echo $this->get_field_name( 'randomize_videos' ); ?>" title="<?php _e('Get random videos of all fetched from channel or playlist', $LYCW->plugin_slug); ?>" /> <label for="<?php echo $this->get_field_id( 'randomize_videos' ); ?>"><?php _e('Show random video', $LYCW->plugin_slug); ?></label>
 		</p>
 		
-		<h4><?php _e('Video Settings', 'youtube-channel'); ?></h4>
-		<p><label for="<?php echo $this->get_field_id('ratio'); ?>"><?php _e('Aspect ratio', 'youtube-channel'); ?>:</label>
+		<h4><?php _e('Video Settings', $LYCW->plugin_slug); ?></h4>
+		<p><label for="<?php echo $this->get_field_id('ratio'); ?>"><?php _e('Aspect ratio', $LYCW->plugin_slug); ?>:</label>
 			<select class="widefat" id="<?php echo $this->get_field_id( 'ratio' ); ?>" name="<?php echo $this->get_field_name( 'ratio' ); ?>">
 				<option value="3"<?php selected( $ratio, 3 ); ?>>16:9</option>
 				<option value="2"<?php selected( $ratio, 2 ); ?>>16:10</option>
 				<option value="1"<?php selected( $ratio, 1 ); ?>>4:3</option>
 			</select><br />
-			<input class="checkbox" type="checkbox" <?php checked( (bool) $responsive, true ); ?> id="<?php echo $this->get_field_id( 'responsive' ); ?>" name="<?php echo $this->get_field_name( 'responsive' ); ?>" /> <label for="<?php echo $this->get_field_id( 'responsive' ); ?>"><?php _e('Responsive video (distribute one full width video per row)', 'youtube-channel'); ?></label>
+			<input class="checkbox" type="checkbox" <?php checked( (bool) $responsive, true ); ?> id="<?php echo $this->get_field_id( 'responsive' ); ?>" name="<?php echo $this->get_field_name( 'responsive' ); ?>" /> <label for="<?php echo $this->get_field_id( 'responsive' ); ?>"><?php _e('Responsive video (distribute one full width video per row)', $LYCW->plugin_slug); ?></label>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id('width'); ?>"><?php _e('Width', 'youtube-channel'); ?>:</label> <input class="small-text" id="<?php echo $this->get_field_id('width'); ?>" name="<?php echo $this->get_field_name('width'); ?>" type="number" min="32" value="<?php echo $width; ?>" title="<?php _e('Set video width in pixels', 'youtube-channel'); ?>" /> px (<?php _e('default', 'youtube-channel'); ?> 306)
+			<label for="<?php echo $this->get_field_id('width'); ?>"><?php _e('Width', $LYCW->plugin_slug); ?>:</label> <input class="small-text" id="<?php echo $this->get_field_id('width'); ?>" name="<?php echo $this->get_field_name('width'); ?>" type="number" min="32" value="<?php echo $width; ?>" title="<?php _e('Set video width in pixels', $LYCW->plugin_slug); ?>" /> px (<?php _e('default', $LYCW->plugin_slug); ?> 306)
 		</p>
 
-		<h4><?php _e('Content Layout', 'youtube-channel'); ?></h4>
+		<h4><?php _e('Content Layout', $LYCW->plugin_slug); ?></h4>
 		<p>
-			<input class="checkbox" type="checkbox" <?php checked( (bool) $showtitle, true ); ?> id="<?php echo $this->get_field_id( 'showtitle' ); ?>" name="<?php echo $this->get_field_name( 'showtitle' ); ?>" /> <label for="<?php echo $this->get_field_id( 'showtitle' ); ?>"><?php _e('Show video title', 'youtube-channel'); ?></label><br />
-			<input class="checkbox" type="checkbox" <?php checked( (bool) $showvidesc, true ); ?> id="<?php echo $this->get_field_id( 'showvidesc' ); ?>" name="<?php echo $this->get_field_name( 'showvidesc' ); ?>" /> <label for="<?php echo $this->get_field_id( 'showvidesc' ); ?>"><?php _e('Show video description', 'youtube-channel'); ?></label><br />
-			<label for="<?php echo $this->get_field_id('videsclen'); ?>"><?php _e('Description length', 'youtube-channel'); ?>: <input class="small-text" id="<?php echo $this->get_field_id('videsclen'); ?>" name="<?php echo $this->get_field_name('videsclen'); ?>" type="number" value="<?php echo $videsclen; ?>" title="<?php _e('Set number of characters to cut down video description to (0 means full length)', 'youtube-channel');?>" /> (0 = full)</label><br />
-			<label for="<?php echo $this->get_field_id('descappend'); ?>"><?php _e('Et cetera string', 'youtube-channel'); ?> <input class="small-text" id="<?php echo $this->get_field_id('descappend'); ?>" name="<?php echo $this->get_field_name('descappend'); ?>" type="text" value="<?php echo $descappend; ?>" title="<?php _e('Default: &amp;hellip;', 'youtube-channel'); ?>"/></label><br />
+			<input class="checkbox" type="checkbox" <?php checked( (bool) $showtitle, true ); ?> id="<?php echo $this->get_field_id( 'showtitle' ); ?>" name="<?php echo $this->get_field_name( 'showtitle' ); ?>" /> <label for="<?php echo $this->get_field_id( 'showtitle' ); ?>"><?php _e('Show video title', $LYCW->plugin_slug); ?></label><br />
+			<input class="checkbox" type="checkbox" <?php checked( (bool) $showvidesc, true ); ?> id="<?php echo $this->get_field_id( 'showvidesc' ); ?>" name="<?php echo $this->get_field_name( 'showvidesc' ); ?>" /> <label for="<?php echo $this->get_field_id( 'showvidesc' ); ?>"><?php _e('Show video description', $LYCW->plugin_slug); ?></label><br />
+			<label for="<?php echo $this->get_field_id('videsclen'); ?>"><?php _e('Description length', $LYCW->plugin_slug); ?>: <input class="small-text" id="<?php echo $this->get_field_id('videsclen'); ?>" name="<?php echo $this->get_field_name('videsclen'); ?>" type="number" value="<?php echo $videsclen; ?>" title="<?php _e('Set number of characters to cut down video description to (0 means full length)', $LYCW->plugin_slug);?>" /> (0 = full)</label><br />
+			<label for="<?php echo $this->get_field_id('descappend'); ?>"><?php _e('Et cetera string', $LYCW->plugin_slug); ?> <input class="small-text" id="<?php echo $this->get_field_id('descappend'); ?>" name="<?php echo $this->get_field_name('descappend'); ?>" type="text" value="<?php echo $descappend; ?>" title="<?php _e('Default: &amp;hellip;', $LYCW->plugin_slug); ?>"/></label><br />
 		</p>
 
 <?php
@@ -169,15 +169,6 @@ class LYCW_Widget extends WP_Widget {
 		return $instance;
 	}
 
-	function debug_string($arr) {
-		$out = '';
-		foreach ( $arr as $key => $val ) {
-			if ( empty($val) ) { $val = 'null'; }
-			$out .= $key . ': ' . $val . chr(13);
-		}
-		return $out;
-	}
-
 	/**
 	 * Get string of cache time dropdown menu alternatives.
 	 *
@@ -187,32 +178,32 @@ class LYCW_Widget extends WP_Widget {
 	private function cache_time( $cache_time ) {
 		$times = array(
 			'minute' => array(
-				1  => __('1 minute', 'youtube-channel'),
-				5  => __('5 minutes', 'youtube-channel'),
-				15 => __('15 minutes', 'youtube-channel'),
-				30 => __('30 minutes', 'youtube-channel')
+				1  => __('1 minute', $LYCW->plugin_slug),
+				5  => __('5 minutes', $LYCW->plugin_slug),
+				15 => __('15 minutes', $LYCW->plugin_slug),
+				30 => __('30 minutes', $LYCW->plugin_slug)
 			),
 			'hour' => array(
-				1  => __('1 hour', 'youtube-channel'),
-				2  => __('2 hours', 'youtube-channel'),
-				5  => __('5 hours', 'youtube-channel'),
-				10 => __('10 hours', 'youtube-channel'),
-				12 => __('12 hours', 'youtube-channel'),
-				18 => __('18 hours', 'youtube-channel')
+				1  => __('1 hour', $LYCW->plugin_slug),
+				2  => __('2 hours', $LYCW->plugin_slug),
+				5  => __('5 hours', $LYCW->plugin_slug),
+				10 => __('10 hours', $LYCW->plugin_slug),
+				12 => __('12 hours', $LYCW->plugin_slug),
+				18 => __('18 hours', $LYCW->plugin_slug)
 			),
 			'day' => array(
-				1 => __('1 day', 'youtube-channel'),
-				2 => __('2 days', 'youtube-channel'),
-				3 => __('3 days', 'youtube-channel'),
-				4 => __('4 days', 'youtube-channel'),
-				5 => __('5 days', 'youtube-channel'),
-				6 => __('6 days', 'youtube-channel')
+				1 => __('1 day', $LYCW->plugin_slug),
+				2 => __('2 days', $LYCW->plugin_slug),
+				3 => __('3 days', $LYCW->plugin_slug),
+				4 => __('4 days', $LYCW->plugin_slug),
+				5 => __('5 days', $LYCW->plugin_slug),
+				6 => __('6 days', $LYCW->plugin_slug)
 			),
 			'week' => array(
-				1 => __('1 week', 'youtube-channel'),
-				2 => __('2 weeks', 'youtube-channel'),
-				3 => __('3 weeks', 'youtube-channel'),
-				4 => __('1 month', 'youtube-channel')
+				1 => __('1 week', $LYCW->plugin_slug),
+				2 => __('2 weeks', $LYCW->plugin_slug),
+				3 => __('3 weeks', $LYCW->plugin_slug),
+				4 => __('1 month', $LYCW->plugin_slug)
 			)
 		);
 
