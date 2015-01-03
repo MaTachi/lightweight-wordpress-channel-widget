@@ -28,6 +28,18 @@ written by [Aleksandar Urošević](http://urosevic.net/). See
 
 Note, SI unit prefixes are used, where k = kilo = 1000.
 
+## Local development and testing
+
+The plugin can easily be tested locally during development with Docker.
+
+The following two steps will create a Docker container with a complete LAMP
+stack and a WordPress blog running within it:
+
+    $ sudo docker build -t wordpress .
+    $ sudo docker run -i -t -p 80:80 -v `pwd`:/var/www/html/wordpress/wp-content/plugins/lightweight-youtube-channel-widget wordpress
+
+The blog is then accessible at <http://localhost/wordpress>.
+
 ## Generate POT file
 
 Attach to the Docker container and run the following command inside it:
