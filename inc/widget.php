@@ -9,7 +9,7 @@ class LYCW_Widget extends WP_Widget {
 		// Initialize Widget
 		parent::__construct(
 			$LYCW->plugin_slug,
-			__( 'Youtube Channel',  $LYCW->plugin_slug ),
+			__( 'Lightweight Youtube Channel Widget',  $LYCW->plugin_slug ),
 			array(
 				'description' => __(
 					'Show YouTube video thumbnails from a channel or playlist',
@@ -106,17 +106,17 @@ class LYCW_Widget extends WP_Widget {
 			<input class="checkbox" type="checkbox" <?php checked( (bool) $randomize_videos, true ); ?> id="<?php echo $this->get_field_id( 'randomize_videos' ); ?>" name="<?php echo $this->get_field_name( 'randomize_videos' ); ?>" title="<?php _e('Get random videos of all fetched from channel or playlist', $LYCW->plugin_slug); ?>" /> <label for="<?php echo $this->get_field_id( 'randomize_videos' ); ?>"><?php _e('Show random video', $LYCW->plugin_slug); ?></label>
 		</p>
 		
-		<h4><?php _e('Video Settings', $LYCW->plugin_slug); ?></h4>
+		<h4><?php _e('Thumbnail Settings', $LYCW->plugin_slug); ?></h4>
 		<p><label for="<?php echo $this->get_field_id('ratio'); ?>"><?php _e('Aspect ratio', $LYCW->plugin_slug); ?>:</label>
 			<select class="widefat" id="<?php echo $this->get_field_id( 'ratio' ); ?>" name="<?php echo $this->get_field_name( 'ratio' ); ?>">
 				<option value="3"<?php selected( $ratio, 3 ); ?>>16:9</option>
 				<option value="2"<?php selected( $ratio, 2 ); ?>>16:10</option>
 				<option value="1"<?php selected( $ratio, 1 ); ?>>4:3</option>
 			</select><br />
-			<input class="checkbox" type="checkbox" <?php checked( (bool) $responsive, true ); ?> id="<?php echo $this->get_field_id( 'responsive' ); ?>" name="<?php echo $this->get_field_name( 'responsive' ); ?>" /> <label for="<?php echo $this->get_field_id( 'responsive' ); ?>"><?php _e('Responsive video (distribute one full width video per row)', $LYCW->plugin_slug); ?></label>
+			<input class="checkbox" type="checkbox" <?php checked( (bool) $responsive, true ); ?> id="<?php echo $this->get_field_id( 'responsive' ); ?>" name="<?php echo $this->get_field_name( 'responsive' ); ?>" /> <label for="<?php echo $this->get_field_id( 'responsive' ); ?>"><?php _e('Responsive thumbnail (distribute one full width video per row)', $LYCW->plugin_slug); ?></label>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id('width'); ?>"><?php _e('Width', $LYCW->plugin_slug); ?>:</label> <input class="small-text" id="<?php echo $this->get_field_id('width'); ?>" name="<?php echo $this->get_field_name('width'); ?>" type="number" min="32" value="<?php echo $width; ?>" title="<?php _e('Set video width in pixels', $LYCW->plugin_slug); ?>" /> px (<?php _e('default', $LYCW->plugin_slug); ?> 306)
+			<label for="<?php echo $this->get_field_id('width'); ?>"><?php _e('Width', $LYCW->plugin_slug); ?>:</label> <input class="small-text" id="<?php echo $this->get_field_id('width'); ?>" name="<?php echo $this->get_field_name('width'); ?>" type="number" min="32" value="<?php echo $width; ?>" title="<?php _e('Set video thumbnail in pixels', $LYCW->plugin_slug); ?>" /> px (<?php _e('default', $LYCW->plugin_slug); ?> 306)
 		</p>
 
 		<h4><?php _e('Content Layout', $LYCW->plugin_slug); ?></h4>

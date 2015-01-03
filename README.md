@@ -27,3 +27,19 @@ written by [Aleksandar Urošević](http://urosevic.net/). See
 ‖ 5998 + 1139 = 7137
 
 Note, SI unit prefixes are used, where k = kilo = 1000.
+
+## Generate POT file
+
+Attach to the Docker container and run the following command inside it:
+
+    $ php /var/www/html/wordpress/tools/i18n/makepot.php wp-plugin /var/www/html/wordpress/wp-content/plugins/lightweight-youtube-channel-widget/ /var/www/html/wordpress/wp-content/plugins/lightweight-youtube-channel-widget/languages/lightweight-youtube-channel-widget-xx_XX.pot
+
+The POT file is accessible outside the Docker container inside the `languages`
+directory.
+
+## Compile PO file to MO
+
+Use the program `msgfmt` to compile a .po file to a binary .mo file. This
+program is available on most Linux distributions in the package `gettext`.
+[Click here](http://codex.wordpress.org/I18n_for_WordPress_Developers#MO_files)
+for more information.
