@@ -81,10 +81,10 @@ class LYCW {
 		// The type of resource to display.
 		$type_of_resource = $instance['type_of_resource'];
 
-		// Get additional class names.
-		$class = '' != $instance['class'] ? $instance['class'] : 'default';
 		if ( !empty( $instance['responsive'] ) ) {
-			$class .= ' responsive';
+			$responsive = ' responsive';
+		} else {
+			$responsive = '';
 		}
 
 		$fetch_videos = $instance['fetch_videos'];
@@ -102,7 +102,7 @@ class LYCW {
 
 		$output = array();
 
-		$output[] = '<div class="youtube_channel ' . $class . '">';
+		$output[] = '<div class="youtube_channel' . $responsive . '">';
 
 		// Do we need cache?
 		if ( $instance['cache_time'] > 0 ) {
@@ -242,16 +242,17 @@ class LYCW {
 	 * Calculate the height when there's a given width and width/height ratio.
 	 *
 	 * @param integer $width The width of the thumbnail.
-	 * @param integer $ratio Which ratio it will use between 1, 2 and 3.
+	 * @param string $ratio Which ratio it will use between `ar4_3`, `ar16_10`,
+	 *   and `ar16_9`.
 	 * $return integer The height of the thumbnail.
 	 */
 	private function height_ratio( $width = 306, $ratio ) {
 		switch ( $ratio ) {
-			case 1:
+			case 'ar4_3':
 				return round( ( $width / 4 ) * 3 );
-			case 2:
+			case 'ar16_10':
 				return round( ( $width / 16 ) * 10 );
-			case 3:
+			case 'ar16_9':
 			default:
 				return round( ( $width / 16 ) * 9 );
 		}
@@ -268,8 +269,6 @@ class LYCW {
 	 *     video block.
 	 */
 	private function render_video_block( $video, $instance, $i) {
-
-		$class = $instance['class'];
 
 		// Set width and height
 		$width  = ( empty($instance['width']) ) ? 306 : $instance['width'];
@@ -303,19 +302,16 @@ class LYCW {
 		);
 
 		// Show video title?
-		if ( $instance['showtitle'] ) {
+		if ( $instance['show_title'] ) {
 			$output[] = sprintf( '<h3 class="ytc_title">%s</h3>', $yt_title );
 		}
 
 		// Define object ID.
 		$ytc_vid = 'ytc_' . $yt_id;
 
-		// Set proper class for responsive thumbs per selected aspect ratio.
-		switch ( $instance['ratio'] ) {
-			case 1: $arclass = 'ar4_3'; break;
-			case 2: $arclass = 'ar16_10'; break;
-			default: $arclass = 'ar16_9';
-		}
+		// Set proper aspect ratio class.
+		$arclass = $instance['ratio'];
+
 		$title = sprintf(
 			__('Watch video %1$s published on %2$s', $this->plugin_slug ),
 			$yt_title, $yt_date
@@ -328,21 +324,21 @@ class LYCW {
 		);
 
 		// Do we need to show video description?
-		if ( $instance['showvidesc'] ) {
+		if ( $instance['show_desc'] ) {
 			$description = $video->content->{'$t'};
 
 			// Remove HTML tags
 			$description = strip_tags( $description );
 
 			if (
-				$instance['videsclen'] > 0 and
-				strlen( $description ) > $instance['videsclen']
+				$instance['desc_length'] > 0 and
+				strlen( $description ) > $instance['desc_length']
 			) {
 				$description = substr(
-					$description, 0, $instance['videsclen']
+					$description, 0, $instance['desc_length']
 				);
-				if ( $instance['descappend'] ) {
-					$etcetera = $instance['descappend'];
+				if ( $instance['desc_append'] ) {
+					$etcetera = $instance['desc_append'];
 				} else {
 					$etcetera = '&hellip;';
 				}

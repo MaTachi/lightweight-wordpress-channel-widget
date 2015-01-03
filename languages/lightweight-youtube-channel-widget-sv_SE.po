@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Lightweight YouTube Channel Widget 10.0\n"
-"Report-Msgid-Bugs-To: http://wordpress.org/support/plugin/youtube-channel-"
-"new\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/support/plugin/lightweight-"
+"youtube-channel-widget\n"
 "POT-Creation-Date: 2015-01-03 12:07:46+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -28,14 +28,6 @@ msgstr "Widget-titel"
 #: inc/widget.php:72
 msgid "Title for widget"
 msgstr "Titel till widgeten"
-
-#: inc/widget.php:75
-msgid "Custom CSS Class"
-msgstr "Egna CSS-klasser"
-
-#: inc/widget.php:75
-msgid "Enter custom class for YTC block, if you wish to target block styling"
-msgstr "Lägg till egna CSS-klasser till varje videoblock"
 
 #: inc/widget.php:78
 msgid "Channel ID"

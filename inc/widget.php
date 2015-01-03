@@ -42,37 +42,33 @@ class LYCW_Widget extends WP_Widget {
 		// outputs the options form for widget settings
 		// General Options
 		$title         = (!empty($instance['title'])) ? esc_attr($instance['title']) : '';
-		$class         = (!empty($instance['class'])) ? esc_attr($instance['class']) : '';
 		$channel       = (!empty($instance['channel'])) ? esc_attr($instance['channel']) : '';
 		$playlist      = (!empty($instance['playlist'])) ? esc_attr($instance['playlist']) : '';
 
 		$type_of_resource = (!empty($instance['type_of_resource'])) ? esc_attr($instance['type_of_resource']) : 'channel'; // resource to use: channel, favorites, playlist
 
-		$cache_time    = (!empty($instance['cache_time'])) ? esc_attr($instance['cache_time']) : '';
+		$cache_time    = (!empty($instance['cache_time'])) ? esc_attr($instance['cache_time']) : 0;
 
 		$fetch_videos  = (!empty($instance['fetch_videos'])) ? esc_attr($instance['fetch_videos']) : 5; // items to fetch
 		$show_videos   = (!empty($instance['show_videos'])) ? esc_attr($instance['show_videos']) : 1; // number of items to show
 
-		$fix_no_items  = (!empty($instance['fix_no_items'])) ? esc_attr($instance['fix_no_items']) : '';
-		$randomize_videos = (!empty($instance['randomize_videos'])) ? esc_attr($instance['randomize_videos']) : '';
+		$fix_no_items  = (!empty($instance['fix_no_items'])) ? esc_attr($instance['fix_no_items']) : false;
+		$randomize_videos = (!empty($instance['randomize_videos'])) ? esc_attr($instance['randomize_videos']) : false;
 
-		// Video Settings
-		$ratio         = (!empty($instance['ratio'])) ? esc_attr($instance['ratio']) : 3;
+		// Thumbnail Settings
+		$ratio         = (!empty($instance['ratio'])) ? esc_attr($instance['ratio']) : 'ar16_9'; // ar4_3, ar16_9, ar16_10
 		$width         = (!empty($instance['width'])) ? esc_attr($instance['width']) : 306;
-		$responsive    = (!empty($instance['responsive'])) ? esc_attr($instance['responsive']) : 0;
+		$responsive    = (!empty($instance['responsive'])) ? esc_attr($instance['responsive']) : false;
 
 		// Content Layout
-		$showtitle     = (!empty($instance['showtitle'])) ? esc_attr($instance['showtitle']) : '';
-		$showvidesc    = (!empty($instance['showvidesc'])) ? esc_attr($instance['showvidesc']) : '';
-		$videsclen     = (!empty($instance['videsclen'])) ? esc_attr($instance['videsclen']) : 0;
-		$descappend    = (!empty($instance['descappend'])) ? esc_attr($instance['descappend']) : '&hellip;';
+		$show_title   = (!empty($instance['show_title'])) ? esc_attr($instance['show_title']) : false;
+		$show_desc    = (!empty($instance['show_desc'])) ? esc_attr($instance['show_desc']) : false;
+		$desc_length  = (!empty($instance['desc_length'])) ? esc_attr($instance['desc_length']) : 0;
+		$desc_append  = (!empty($instance['desc_append'])) ? esc_attr($instance['desc_append']) : '&hellip;';
 		?>
 
 		<p>
 			<label for="<?php echo $this->get_field_id('title');	?>"><?php _e('Widget Title', $LYCW->plugin_slug); ?>:<input type="text" class="widefat" id="<?php echo $this->get_field_id('title');		?>" name="<?php echo $this->get_field_name('title');	?>" value="<?php echo $title;		?>" title="<?php _e('Title for widget', $LYCW->plugin_slug); ?>" /></label>
-		</p>
-		<p>
-			<label for="<?php echo $this->get_field_id('class'); ?>"><?php _e('Custom CSS Class', $LYCW->plugin_slug); ?>:<input type="text" class="widefat" id="<?php echo $this->get_field_id('class');		?>" name="<?php echo $this->get_field_name('class');	?>" value="<?php echo $class;		?>" title="<?php _e('Enter custom class for YTC block, if you wish to target block styling', $LYCW->plugin_slug); ?>" /></label>
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id('channel');	?>"><?php _e('Channel ID', $LYCW->plugin_slug); ?>:<input type="text" class="widefat" id="<?php echo $this->get_field_id('channel');		?>" name="<?php echo $this->get_field_name('channel');	?>" value="<?php echo $channel;		?>" title="<?php _e('YouTube Channel name (not URL to channel)', $LYCW->plugin_slug); ?>" /></label>
@@ -109,9 +105,9 @@ class LYCW_Widget extends WP_Widget {
 		<h4><?php _e('Thumbnail Settings', $LYCW->plugin_slug); ?></h4>
 		<p><label for="<?php echo $this->get_field_id('ratio'); ?>"><?php _e('Aspect ratio', $LYCW->plugin_slug); ?>:</label>
 			<select class="widefat" id="<?php echo $this->get_field_id( 'ratio' ); ?>" name="<?php echo $this->get_field_name( 'ratio' ); ?>">
-				<option value="3"<?php selected( $ratio, 3 ); ?>>16:9</option>
-				<option value="2"<?php selected( $ratio, 2 ); ?>>16:10</option>
-				<option value="1"<?php selected( $ratio, 1 ); ?>>4:3</option>
+				<option value="ar16_9"<?php selected( $ratio, 3 ); ?>>16:9</option>
+				<option value="ar16_10"<?php selected( $ratio, 2 ); ?>>16:10</option>
+				<option value="ar4_3"<?php selected( $ratio, 1 ); ?>>4:3</option>
 			</select><br />
 			<input class="checkbox" type="checkbox" <?php checked( (bool) $responsive, true ); ?> id="<?php echo $this->get_field_id( 'responsive' ); ?>" name="<?php echo $this->get_field_name( 'responsive' ); ?>" /> <label for="<?php echo $this->get_field_id( 'responsive' ); ?>"><?php _e('Responsive thumbnail (distribute one full width video per row)', $LYCW->plugin_slug); ?></label>
 		</p>
@@ -121,10 +117,10 @@ class LYCW_Widget extends WP_Widget {
 
 		<h4><?php _e('Content Layout', $LYCW->plugin_slug); ?></h4>
 		<p>
-			<input class="checkbox" type="checkbox" <?php checked( (bool) $showtitle, true ); ?> id="<?php echo $this->get_field_id( 'showtitle' ); ?>" name="<?php echo $this->get_field_name( 'showtitle' ); ?>" /> <label for="<?php echo $this->get_field_id( 'showtitle' ); ?>"><?php _e('Show video title', $LYCW->plugin_slug); ?></label><br />
-			<input class="checkbox" type="checkbox" <?php checked( (bool) $showvidesc, true ); ?> id="<?php echo $this->get_field_id( 'showvidesc' ); ?>" name="<?php echo $this->get_field_name( 'showvidesc' ); ?>" /> <label for="<?php echo $this->get_field_id( 'showvidesc' ); ?>"><?php _e('Show video description', $LYCW->plugin_slug); ?></label><br />
-			<label for="<?php echo $this->get_field_id('videsclen'); ?>"><?php _e('Description length', $LYCW->plugin_slug); ?>: <input class="small-text" id="<?php echo $this->get_field_id('videsclen'); ?>" name="<?php echo $this->get_field_name('videsclen'); ?>" type="number" value="<?php echo $videsclen; ?>" title="<?php _e('Set number of characters to cut down video description to (0 means full length)', $LYCW->plugin_slug);?>" /> (0 = full)</label><br />
-			<label for="<?php echo $this->get_field_id('descappend'); ?>"><?php _e('Et cetera string', $LYCW->plugin_slug); ?> <input class="small-text" id="<?php echo $this->get_field_id('descappend'); ?>" name="<?php echo $this->get_field_name('descappend'); ?>" type="text" value="<?php echo $descappend; ?>" title="<?php _e('Default: &amp;hellip;', $LYCW->plugin_slug); ?>"/></label><br />
+			<input class="checkbox" type="checkbox" <?php checked( (bool) $show_title, true ); ?> id="<?php echo $this->get_field_id( 'show_title' ); ?>" name="<?php echo $this->get_field_name( 'show_title' ); ?>" /> <label for="<?php echo $this->get_field_id( 'show_title' ); ?>"><?php _e('Show video title', $LYCW->plugin_slug); ?></label><br />
+			<input class="checkbox" type="checkbox" <?php checked( (bool) $show_desc, true ); ?> id="<?php echo $this->get_field_id( 'show_desc' ); ?>" name="<?php echo $this->get_field_name( 'show_desc' ); ?>" /> <label for="<?php echo $this->get_field_id( 'show_desc' ); ?>"><?php _e('Show video description', $LYCW->plugin_slug); ?></label><br />
+			<label for="<?php echo $this->get_field_id('desc_length'); ?>"><?php _e('Description length', $LYCW->plugin_slug); ?>: <input class="small-text" id="<?php echo $this->get_field_id('desc_length'); ?>" name="<?php echo $this->get_field_name('desc_length'); ?>" type="number" value="<?php echo $desc_length; ?>" title="<?php _e('Set number of characters to cut down video description to (0 means full length)', $LYCW->plugin_slug);?>" /> (0 = full)</label><br />
+			<label for="<?php echo $this->get_field_id('desc_append'); ?>"><?php _e('Et cetera string', $LYCW->plugin_slug); ?> <input class="small-text" id="<?php echo $this->get_field_id('desc_append'); ?>" name="<?php echo $this->get_field_name('desc_append'); ?>" type="text" value="<?php echo $desc_append; ?>" title="<?php _e('Default: &amp;hellip;', $LYCW->plugin_slug); ?>"/></label><br />
 		</p>
 
 <?php
@@ -134,7 +130,6 @@ class LYCW_Widget extends WP_Widget {
 		// processes widget options to be saved
 		$instance                  = $old_instance;
 		$instance['title']         = strip_tags($new_instance['title']);
-		$instance['class']         = strip_tags($new_instance['class']);
 		$instance['channel']       = strip_tags($new_instance['channel']);
 		$instance['show_videos']   = $new_instance['show_videos'];
 		$instance['playlist']      = strip_tags($new_instance['playlist']);
@@ -156,15 +151,15 @@ class LYCW_Widget extends WP_Widget {
 			$instance['fetch_videos'] = 5;
 		}
 
-		$instance['showtitle']     = (isset($new_instance['showtitle'])) ? $new_instance['showtitle'] : false;
-		$instance['showvidesc']    = (isset($new_instance['showvidesc'])) ? $new_instance['showvidesc'] : false;
-		$instance['descappend']    = strip_tags($new_instance['descappend']);
-		$instance['videsclen']     = strip_tags($new_instance['videsclen']);
-		$instance['width']         = strip_tags($new_instance['width']);
-		$instance['responsive']    = (isset($new_instance['responsive'])) ? $new_instance['responsive'] : '';
+		$instance['show_title']   = (isset($new_instance['show_title'])) ? $new_instance['show_title'] : false;
+		$instance['show_desc']    = (isset($new_instance['show_desc'])) ? $new_instance['show_desc'] : false;
+		$instance['desc_append']  = strip_tags($new_instance['desc_append']);
+		$instance['desc_length']  = strip_tags($new_instance['desc_length']);
+		$instance['width']        = strip_tags($new_instance['width']);
+		$instance['responsive']   = (isset($new_instance['responsive'])) ? $new_instance['responsive'] : false;
 
-		$instance['fix_no_items']  = (isset($new_instance['fix_no_items'])) ? $new_instance['fix_no_items'] : false;
-		$instance['ratio']         = strip_tags($new_instance['ratio']);
+		$instance['fix_no_items'] = (isset($new_instance['fix_no_items'])) ? $new_instance['fix_no_items'] : false;
+		$instance['ratio']        = strip_tags($new_instance['ratio']);
 
 		return $instance;
 	}
@@ -236,7 +231,6 @@ class LYCW_Widget extends WP_Widget {
 		}
 		return $out;
 	}
-
 }
 
 // Register widget.
