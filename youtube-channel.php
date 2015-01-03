@@ -61,77 +61,46 @@ class LYCW {
 	 */
 	public function output( $instance ) {
 		// Get channel name.
-		if ( "" != $instance['channel'] ) {
+		if ( '' != $instance['channel'] ) {
 			$channel = $instance['channel'];
 		} else {
 			$channel = $this->default_channel_id;
 		}
 
 		// Get playlist ID.
-		if ( "" != $instance['playlist'] ) {
+		if ( '' != $instance['playlist'] ) {
 			$playlist = $instance['playlist'];
 		} else {
 			$playlist = $this->default_playlist_id;
 		}
-
 		// Trim PL in front of the playlist ID.
 		$playlist = preg_replace( '/^PL/', '', $playlist );
 
 		// The type of resource to display.
-		$use_res = $instance['use_res'];
+		$type_of_resource = $instance['type_of_resource'];
 
 		// Get additional class names.
-		$class = "" != $instance['class'] ? $instance['class'] : 'default';
+		$class = '' != $instance['class'] ? $instance['class'] : 'default';
 		if ( !empty( $instance['responsive'] ) ) {
 			$class .= ' responsive';
 		}
 
+		$fetch_videos = $instance['fetch_videos'];
+		$show_videos = $instance['show_videos'];
+		if ( !isset( $fetch_videos ) ) {
+			$fetch_videos = 5;
+		}
+
+		$randomize_videos = $instance['randomize_videos'];
+
+		$feed_url = $this->get_feed_url(
+			$instance['type_of_resource'], $channel, $playlist,
+			$fetch_videos, $instance['fix_no_items']
+		);
+
 		$output = array();
 
 		$output[] = '<div class="youtube_channel '.$class.'">';
-
-
-
-
-		// Get max items for random video.
-		$maxrnd = $instance['maxrnd'];
-		if ( $maxrnd < 1 ) {
-			$maxrnd = 10; // default 10
-		} elseif ( $maxrnd > 50 ) {
-			$maxrnd = 50; // max 50
-		}
-
-		$feed_attr = '?alt=json';
-		// Select fields.
-		$feed_attr .= '&fields=entry(published,title,link,content)';
-
-		if ( !$instance['fixnoitem'] && $use_res != 1 ) {
-			$feed_attr .= '&orderby=published';
-		}
-
-		$getrnd = $instance['getrnd'];
-		if ( $getrnd ) {
-			$feed_attr .= '&max-results=' . $maxrnd;
-		}
-
-		$feed_attr .= '&rel=0';
-
-		switch ($use_res) {
-			case 0: // Channel
-			default:
-				$feed_url = 'http://gdata.youtube.com/feeds/base/users/' .
-					$channel . '/uploads';
-				break;
-			case 1: // Favorites
-				$feed_url = 'http://gdata.youtube.com/feeds/base/users/' .
-					$channel . '/favorites';
-				break;
-			case 2: // Playlist
-				$playlist = $this->clean_playlist_id($playlist);
-				$feed_url = 'http://gdata.youtube.com/feeds/api/playlists/' .
-					$playlist;
-		}
-		$feed_url .= $feed_attr;
 
 		// Do we need cache?
 		if ( $instance['cache_time'] > 0 ) {
@@ -169,70 +138,50 @@ class LYCW {
 		}
 
 		// Decode JSON data.
-		$json_output = json_decode($json);
+		$json_output = json_decode( $json );
 
-		// Predefine maxitems to prevent undefined notices.
-		$maxitems = 0;
+		$error_found = false;
+		$entries_found = true;
+
 		if (
 			!is_wp_error( $json_output ) &&
 			is_object( $json_output ) &&
 			!empty( $json_output->feed->entry )
 		) {
-			// Sort by date uploaded.
-			$json_entry = $json_output->feed->entry;
+			// Sorted by date uploaded.
+			$videos = $json_output->feed->entry;
 
-			$vidqty = $instance['vidqty'];
-			if ( $vidqty > $maxrnd ) {
-				$maxrnd = $vidqty;
-			}
-
-			if ( $maxrnd > sizeof( $json_entry ) ) {
- 				$maxitems = sizeof( $json_entry );
+			if ( sizeof( $videos ) <= 0 ) {
+				$entries_found = false;
 			} else {
-				$maxitems = $maxrnd;
+				$fetch_videos = sizeof( $videos );
 			}
-
-			if ( $getrnd ) {
-				$items = array_slice( $json_entry , 0 , $maxitems );
-			} else {
-				if ( !$vidqty ) {
-					$vidqty = 1;
-				}
-				$items = array_slice( $json_entry , 0 , $vidqty );
-			}
+		} else {
+			$error_found = true;
 		}
 
-		if ( $maxitems == 0 ) {
-			$output[] = __( 'No items', $this->plugin_slug) .
+		if ( $error_found or !$entries_found ) {
+			$output[] = __( 'No items', $this->plugin_slug ) .
 				' [<a href="' .  $feed_url .  '" target="_blank">' .
 				__( 'Check here why' , $this->plugin_slug ) . '</a>]';
-		} else {
-			if ( $getrnd ) {
-				$rnd_used = array(); // set array for unique random item
-			}
-
-			for ( $y = 1; $y <= $vidqty; ++$y ) {
-				if ( $getrnd ) {
-					$rnd_item = mt_rand( 0, ( count( $items ) - 1 ) );
-					while ( $y > 1 && in_array( $rnd_item, $rnd_used ) ) {
-						$rnd_item = mt_rand( 0, ( count( $items ) - 1 ) );
-					}
-					$rnd_used[] = $rnd_item;
-					$item = $items[ $rnd_item ];
-				} else {
-					$item = $items[ $y - 1 ];
-				}
-
-				// Print single video block.
-				$output = array_merge(
-					$output,
-					$this->print_video( $item, $instance, $y )
-				);
-			}
-
+			return $output;
 		}
 
+		if ( $randomize_videos ) {
+			shuffle( $videos );
+		}
 
+		// Only show at max `show_videos` number of videos.
+		$videos = array_slice( $videos, 0, $show_videos );
+
+		// http://stackoverflow.com/a/3561009/595990
+		foreach ( array_values( $videos ) as $i => $video ) {
+			// Render a single video block.
+			$output = array_merge(
+				$output,
+				$this->render_video_block( $video, $instance, $i + 1 )
+			);
+		}
 
 		$output[] = '</div><!-- .youtube_channel -->';
 
@@ -240,7 +189,58 @@ class LYCW {
 	}
 
 	/**
+	 * Generate a feed URL that will fetch the desired videos from YouTube's 
+	 * JSON API.
+	 *
+	 * @param string $type_of_resource `channel`, `favorites` or 'playlist'.
+	 * @param string $channel Name of the channel.
+	 * @param string $playlist Name of the playlist.
+	 * @param integer $fetch_videos The number of videos to fetch.
+	 * @param bool $fix_no_items Try to fix it if the user experiences the
+	 *     "no items found" error.
+	 * @return string A YouTube API URL.
+	 */
+	private function get_feed_url(
+		$type_of_resource, $channel, $playlist, $fetch_videos, $fix_no_items
+	) {
+		$feed_attr = '?alt=json';
+
+		// Select fields.
+		$feed_attr .= '&fields=entry(published,title,link,content)';
+
+		if ( !$fix_no_items && 'favorites' != $type_of_resource ) {
+			$feed_attr .= '&orderby=published';
+		}
+
+		$feed_attr .= '&max-results=' . $fetch_videos;
+
+		$feed_attr .= '&rel=0';
+
+		switch ( $type_of_resource ) {
+			case 'channel':
+			default:
+				$feed_url = 'http://gdata.youtube.com/feeds/base/users/' .
+					$channel . '/uploads';
+				break;
+			case 'favorites':
+				$feed_url = 'http://gdata.youtube.com/feeds/base/users/' .
+					$channel . '/favorites';
+				break;
+			case 'playlist':
+				$playlist = $this->clean_playlist_id( $playlist );
+				$feed_url = 'http://gdata.youtube.com/feeds/api/playlists/' .
+					$playlist;
+		}
+
+		return $feed_url . $feed_attr;
+	}
+
+	/**
 	 * Calculate the height when there's a given width and width/height ratio.
+	 *
+	 * @param integer $width The width of the thumbnail.
+	 * @param integer $ratio Which ratio it will use between 1, 2 and 3.
+	 * $return integer The height of the thumbnail.
 	 */
 	private function height_ratio( $width = 306, $ratio ) {
 		switch ( $ratio ) {
@@ -255,9 +255,16 @@ class LYCW {
 	}
 
 	/**
-	 * Print a single video block.
+	 * Render a single video block.
+	 *
+	 * @param object $video A single video from YouTube's JSON API as a PHP
+	 *     object.
+	 * @param array $instance A setup of variables for this widget.
+	 * @param integer $i The placement of the video block, starting from 1.
+	 * @return array An array of strings making up the HTML to distlay the
+	 *     video block.
 	 */
-	private function print_video( $item, $instance, $y) {
+	private function render_video_block( $video, $instance, $i) {
 
 		$class = $instance['class'];
 
@@ -265,26 +272,22 @@ class LYCW {
 		$width  = ( empty($instance['width']) ) ? 306 : $instance['width'];
 		$height = $this->height_ratio( $width, $instance['ratio'] );
 
-		// calculate image height based on width for 4:3 thumbnail
-		$imgfixedheight = $width / 4 * 3;
-
-		$yt_id    = $item->link[0]->href;
+		$yt_id    = $video->link[0]->href;
 		$yt_id    = preg_replace( '/^.*=(.*)&.*$/', '${1}', $yt_id );
 		$yt_url   = "v/$yt_id";
 
 		$yt_thumb = "//img.youtube.com/vi/$yt_id/0.jpg"; // zero for HD thumb
-		$yt_video = $item->link[0]->href;
+		$yt_video = $video->link[0]->href;
 		$yt_video = preg_replace('/\&.*$/','',$yt_video);
 
-		$yt_title = $item->title->{'$t'};
-		$yt_date  = $item->published->{'$t'};
-		//$yt_date = $item->get_date('j F Y | g:i a');
+		$yt_title = $video->title->{'$t'};
+		$yt_date  = $video->published->{'$t'};
 
-		switch ( $y ) {
+		switch ( $i ) {
 			case 1:
 				$vnumclass = 'first';
 				break;
-			case $instance['vidqty']:
+			case $instance['show_videos']:
 				$vnumclass = 'last';
 				break;
 			default:
@@ -293,7 +296,7 @@ class LYCW {
 
 		$output[] = sprintf(
 			'<div class="ytc_video_container ytc_video_%d ytc_video_%s" style="width: %dpx">',
-			$y, $vnumclass, $width
+			$i, $vnumclass, $width
 		);
 
 		// Show video title?
@@ -323,10 +326,10 @@ class LYCW {
 
 		// Do we need to show video description?
 		if ( $instance['showvidesc'] ) {
-			preg_match( '/><span>(.*)<\/span><\/div>/', $item->content->{'$t'},
+			preg_match( '/><span>(.*)<\/span><\/div>/', $video->content->{'$t'},
 				$videsc );
 			if ( empty($videsc[1]) ) {
-				$videsc[1] = $item->content->{'$t'};
+				$videsc[1] = $video->content->{'$t'};
 			}
 
 			// clean HTML

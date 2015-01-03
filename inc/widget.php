@@ -9,7 +9,7 @@ class LYCW_Widget extends WP_Widget {
 		// Initialize Widget
 		parent::__construct(
 			$LYCW->plugin_slug,
-			__( 'Youtube Channel' , 'youtube-channel' ),
+			__( 'Youtube Channel', 'youtube-channel' ),
 			array(
 				'description' => __(
 					'Show YouTube video thumbnails from a channel or playlist',
@@ -24,17 +24,17 @@ class LYCW_Widget extends WP_Widget {
 		// outputs the content of the widget
 		extract( $args );
 
-		$title = apply_filters( 'widget_title' , $instance['title'] );
+		$title = apply_filters( 'widget_title', $instance['title'] );
 
 		$output = array();
 		$output[] = $before_widget;
 		if ( $title ) {
 			$output[] = $before_title . $title . $after_title;
 		}
-		$output[] = implode($LYCW->output($instance));
+		$output[] = implode($LYCW->output( $instance ));
 		$output[] = $after_widget;
 
-		echo implode('',array_values($output));
+		echo implode( '', array_values( $output ) );
 	}
 
 	public function form( $instance ) {
@@ -46,15 +46,15 @@ class LYCW_Widget extends WP_Widget {
 		$channel       = (!empty($instance['channel'])) ? esc_attr($instance['channel']) : '';
 		$playlist      = (!empty($instance['playlist'])) ? esc_attr($instance['playlist']) : '';
 
-		$use_res       = (!empty($instance['use_res'])) ? esc_attr($instance['use_res']) : 0; // resource to use: channel, favorites, playlist
+		$type_of_resource = (!empty($instance['type_of_resource'])) ? esc_attr($instance['type_of_resource']) : 'channel'; // resource to use: channel, favorites, playlist
 
 		$cache_time    = (!empty($instance['cache_time'])) ? esc_attr($instance['cache_time']) : '';
 
-		$maxrnd        = (!empty($instance['maxrnd'])) ? esc_attr($instance['maxrnd']) : 25; // items to fetch
-		$vidqty        = (!empty($instance['vidqty'])) ? esc_attr($instance['vidqty']) : 1; // number of items to show
+		$fetch_videos  = (!empty($instance['fetch_videos'])) ? esc_attr($instance['fetch_videos']) : 5; // items to fetch
+		$show_videos   = (!empty($instance['show_videos'])) ? esc_attr($instance['show_videos']) : 1; // number of items to show
 
-		$fixnoitem     = (!empty($instance['fixnoitem'])) ? esc_attr($instance['fixnoitem']) : '';
-		$getrnd        = (!empty($instance['getrnd'])) ? esc_attr($instance['getrnd']) : '';
+		$fix_no_items  = (!empty($instance['fix_no_items'])) ? esc_attr($instance['fix_no_items']) : '';
+		$randomize_videos = (!empty($instance['randomize_videos'])) ? esc_attr($instance['randomize_videos']) : '';
 
 		// Video Settings
 		$ratio         = (!empty($instance['ratio'])) ? esc_attr($instance['ratio']) : 3;
@@ -81,11 +81,11 @@ class LYCW_Widget extends WP_Widget {
 			<label for="<?php echo $this->get_field_id('playlist');	?>"><?php _e('Playlist ID', 'youtube-channel'); ?>:<input type="text" class="widefat" id="<?php echo $this->get_field_id('playlist');	?>" name="<?php echo $this->get_field_name('playlist'); ?>" value="<?php echo $playlist;	?>" title="<?php _e('YouTube Playlist ID (not playlist name)', 'youtube-channel'); ?>" /></label>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id('use_res');	?>"><?php _e('Resource to use', 'youtube-channel'); ?>:</label>
-			<select class="widefat" id="<?php echo $this->get_field_id( 'use_res' ); ?>" name="<?php echo $this->get_field_name( 'use_res' ); ?>">
-				<option value="0"<?php selected( $use_res, 0 ); ?>><?php _e('Channel', 'youtube-channel'); ?></option>
-				<option value="1"<?php selected( $use_res, 1 ); ?>><?php _e('Favorites', 'youtube-channel'); ?></option>
-				<option value="2"<?php selected( $use_res, 2 ); ?>><?php _e('Playlist', 'youtube-channel'); ?></option>
+			<label for="<?php echo $this->get_field_id('type_of_resource'); ?>"><?php _e('Resource to use', 'youtube-channel'); ?>:</label>
+			<select class="widefat" id="<?php echo $this->get_field_id( 'type_of_resource' ); ?>" name="<?php echo $this->get_field_name( 'type_of_resource' ); ?>">
+				<option value="channel"<?php selected( $type_of_resource, 'channel' ); ?>><?php _e('Channel', 'youtube-channel'); ?></option>
+				<option value="favorites"<?php selected( $type_of_resource, 'favorites' ); ?>><?php _e('Favorites', 'youtube-channel'); ?></option>
+				<option value="playlist"<?php selected( $type_of_resource, 'playlist' ); ?>><?php _e('Playlist', 'youtube-channel'); ?></option>
 			</select>
 		</p>
 		<p>
@@ -96,14 +96,14 @@ class LYCW_Widget extends WP_Widget {
 			</select>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id('maxrnd'); ?>"><?php _e('Fetch', 'youtube-channel'); ?>: <input class="small-text" id="<?php echo $this->get_field_id('maxrnd'); ?>" name="<?php echo $this->get_field_name('maxrnd'); ?>" type="number" min="2" value="<?php echo $maxrnd; ?>" title="<?php _e('Number of videos that will be used for random pick (min 2, max 50, default 25)', 'youtube-channel'); ?>" /> <?php _e('video(s)', 'youtube-channel'); ?></label>
+			<label for="<?php echo $this->get_field_id('fetch_videos'); ?>"><?php _e('Fetch', 'youtube-channel'); ?>: <input class="small-text" id="<?php echo $this->get_field_id('fetch_videos'); ?>" name="<?php echo $this->get_field_name('fetch_videos'); ?>" type="number" min="2" value="<?php echo $fetch_videos; ?>" title="<?php _e('Number of videos that will be used for random pick (min 2, max 50, default 25)', 'youtube-channel'); ?>" /> <?php _e('video(s)', 'youtube-channel'); ?></label>
 			<br />
-			<label for="<?php echo $this->get_field_id('vidqty'); ?>"><?php _e('Show', 'youtube-channel'); ?>:</label> <input class="small-text" id="<?php echo $this->get_field_id('vidqty'); ?>" name="<?php echo $this->get_field_name('vidqty'); ?>" type="number" min="1" value="<?php echo ( $vidqty ) ? $vidqty : '1'; ?>" title="<?php _e('Number of videos to display', 'youtube-channel'); ?>" /> <?php _e('video(s)', 'youtube-channel'); ?>
+			<label for="<?php echo $this->get_field_id('show_videos'); ?>"><?php _e('Show', 'youtube-channel'); ?>:</label> <input class="small-text" id="<?php echo $this->get_field_id('show_videos'); ?>" name="<?php echo $this->get_field_name('show_videos'); ?>" type="number" min="1" value="<?php echo ( $show_videos ) ? $show_videos : '1'; ?>" title="<?php _e('Number of videos to display', 'youtube-channel'); ?>" /> <?php _e('video(s)', 'youtube-channel'); ?>
 		</p>
 		<p>
-			<input class="checkbox" type="checkbox" <?php checked( (bool) $fixnoitem, true ); ?> id="<?php echo $this->get_field_id( 'fixnoitem' ); ?>" name="<?php echo $this->get_field_name( 'fixnoitem' ); ?>" title="<?php _e('Enable this option if you get error No Item', 'youtube-channel'); ?>" /> <label for="<?php echo $this->get_field_id( 'fixnoitem' ); ?>"><?php _e('Fix <em>No items</em> error/Respect playlist order', 'youtube-channel'); ?></label>
+			<input class="checkbox" type="checkbox" <?php checked( (bool) $fix_no_items, true ); ?> id="<?php echo $this->get_field_id( 'fix_no_items' ); ?>" name="<?php echo $this->get_field_name( 'fix_no_items' ); ?>" title="<?php _e('Enable this option if you get error No Item', 'youtube-channel'); ?>" /> <label for="<?php echo $this->get_field_id( 'fix_no_items' ); ?>"><?php _e('Fix <em>No items</em> error/Respect playlist order', 'youtube-channel'); ?></label>
 			<br />
-			<input class="checkbox" type="checkbox" <?php checked( (bool) $getrnd, true ); ?> id="<?php echo $this->get_field_id( 'getrnd' ); ?>" name="<?php echo $this->get_field_name( 'getrnd' ); ?>" title="<?php _e('Get random videos of all fetched from channel or playlist', 'youtube-channel'); ?>" /> <label for="<?php echo $this->get_field_id( 'getrnd' ); ?>"><?php _e('Show random video', 'youtube-channel'); ?></label>
+			<input class="checkbox" type="checkbox" <?php checked( (bool) $randomize_videos, true ); ?> id="<?php echo $this->get_field_id( 'randomize_videos' ); ?>" name="<?php echo $this->get_field_name( 'randomize_videos' ); ?>" title="<?php _e('Get random videos of all fetched from channel or playlist', 'youtube-channel'); ?>" /> <label for="<?php echo $this->get_field_id( 'randomize_videos' ); ?>"><?php _e('Show random video', 'youtube-channel'); ?></label>
 		</p>
 		
 		<h4><?php _e('Video Settings', 'youtube-channel'); ?></h4>
@@ -136,16 +136,25 @@ class LYCW_Widget extends WP_Widget {
 		$instance['title']         = strip_tags($new_instance['title']);
 		$instance['class']         = strip_tags($new_instance['class']);
 		$instance['channel']       = strip_tags($new_instance['channel']);
-		$instance['vidqty']        = $new_instance['vidqty'];
+		$instance['show_videos']   = $new_instance['show_videos'];
 		$instance['playlist']      = strip_tags($new_instance['playlist']);
-		$instance['use_res']       = $new_instance['use_res'];
+		$instance['type_of_resource'] = $new_instance['type_of_resource'];
 		$instance['cache_time']    = $new_instance['cache_time'];
-		$instance['getrnd']        = (isset($new_instance['getrnd'])) ? $new_instance['getrnd'] : false;
-		$instance['maxrnd']        = $new_instance['maxrnd'];
-		
-		$instance['goto_txt']      = strip_tags($new_instance['goto_txt']);
-		$instance['showgoto']      = (isset($new_instance['showgoto'])) ? $new_instance['showgoto'] : false;
-		$instance['popup_goto']    = $new_instance['popup_goto'];
+		$instance['randomize_videos'] = (isset($new_instance['randomize_videos'])) ? $new_instance['randomize_videos'] : false;
+		if (
+			isset( $new_instance['fetch_videos'] ) &&
+			is_numeric( $new_instance['fetch_videos'] )
+		) {
+			if ( $new_instance['fetch_videos'] > 50 ) {
+				$instance['fetch_videos'] = 50;
+			} else if ( $new_instance['fetch_videos'] < 1 ) {
+				$instance['fetch_videos'] = 1;
+			} else {
+				$instance['fetch_videos'] = $new_instance['fetch_videos'];
+			}
+		} else {
+			$instance['fetch_videos'] = 5;
+		}
 		
 		$instance['showtitle']     = (isset($new_instance['showtitle'])) ? $new_instance['showtitle'] : false;
 		$instance['showvidesc']    = (isset($new_instance['showvidesc'])) ? $new_instance['showvidesc'] : false;
@@ -154,7 +163,7 @@ class LYCW_Widget extends WP_Widget {
 		$instance['width']         = strip_tags($new_instance['width']);
 		$instance['responsive']    = (isset($new_instance['responsive'])) ? $new_instance['responsive'] : '';
 
-		$instance['fixnoitem']     = (isset($new_instance['fixnoitem'])) ? $new_instance['fixnoitem'] : false;
+		$instance['fix_no_items']  = (isset($new_instance['fix_no_items'])) ? $new_instance['fix_no_items'] : false;
 		$instance['ratio']         = strip_tags($new_instance['ratio']);
 
 		return $instance;
