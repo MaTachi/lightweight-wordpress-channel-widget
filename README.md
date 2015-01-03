@@ -8,6 +8,14 @@ This is a slimmed down fork of the WordPress plugin
 written by [Aleksandar Urošević](http://urosevic.net/). See
 [readme.txt](readme.txt) for the WordPress metadata README file.
 
+## License
+
+As the original codebase ([YouTube Channel version
+2.4.1.3](https://wordpress.org/plugins/youtube-channel/developers/)) is
+licensed under GPLv3, this project as a whole needs to retain that license.
+However, my contributions are licensed under the MIT License, though not very
+useful as long as the there still exists GPL licensed code in the project.
+
 ## Codebase comparison
 
 |     | Lightweight YouTube Channel Widget 10.0  | YouTube Channel 2.4.1.3 |
