@@ -40,6 +40,13 @@ stack and a WordPress blog running within it:
 
 The blog is then accessible at <http://localhost/wordpress>.
 
+## Packaging
+
+Build a zip file containing the plugin with all its necessary files by running
+the following command:
+
+    $ ./make.sh
+
 ## Generate POT file
 
 Attach to the Docker container and run the following command inside it:
