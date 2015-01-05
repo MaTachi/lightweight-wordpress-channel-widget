@@ -1,7 +1,9 @@
 # Lightweight YouTube Channel Widget
 
 Author: Daniel Jonsson  
-License: GPL version 3
+License: GPL version 3  
+Download URL:
+<https://wordpress.org/plugins/lightweight-youtube-channel-widget/>
 
 This is a slimmed down fork of the WordPress plugin
 [youtube-channel](http://wordpress.org/plugins/youtube-channel/) which is
