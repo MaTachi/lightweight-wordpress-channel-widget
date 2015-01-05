@@ -57,6 +57,16 @@ the following command:
 
     $ ./make.sh
 
+## Wordpress.org assets
+
+The assets (banners, screenshots and icon) being used on
+[wordpress.org/plugins/lightweight-youtube-channel-widget/](https://wordpress.org/plugins/lightweight-youtube-channel-widget/)
+are found in the directory [wp-assets/](wp-assets/).
+
+The [icon](wp-assets/icon.svg) is available on [Wikimedia
+Commons](http://commons.wikimedia.org/wiki/File:Anime_eye.svg) under [CC BY-SA
+2.5](http://creativecommons.org/licenses/by-sa/2.5/deed.en).
+
 ## Generate POT file
 
 Attach to the Docker container and run the following command inside it:
