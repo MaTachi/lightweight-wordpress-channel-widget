@@ -191,7 +191,7 @@ class LYCW {
 	}
 
 	/**
-	 * Generate a feed URL that will fetch the desired videos from YouTube's 
+	 * Generate a feed URL that will fetch the desired videos from YouTube's
 	 * JSON API.
 	 *
 	 * @param string $type_of_resource `channel`, `favorites` or 'playlist'.
